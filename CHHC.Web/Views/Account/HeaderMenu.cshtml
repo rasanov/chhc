@@ -1,0 +1,131 @@
+﻿@using CHHC.Web
+@using CHHC.Web.Models;
+@model MyChhcDashboard
+
+@{
+            string defaultControllerName;
+            AccountHelper.GetDefaultController(User.Identity.Name, out defaultControllerName);
+            
+            string landingControllerName;
+            string landingActionName;
+            AccountHelper.GetLandingControllerAction(User.Identity.Name, out landingControllerName, out landingActionName);
+
+            <div class="pull-right sign-in-out container">
+                @if (Request.IsAuthenticated)
+                {
+                    <text>
+                        <div class="login-menu-padding pull-left">Welcome, @User.Identity.Name</div>
+                        @{
+                            if (ViewContext.Controller is CHHC.Web.Controllers.HomeController)
+                            {
+                                <div class="login-menu-padding pull-left">@Html.ActionLink("My CHHC", landingActionName, landingControllerName, null, null)</div>
+                            }
+                        }
+                        <div class="login-menu-padding pull-left">@Html.ActionLink("change password", "ChangePassword", "Account", null, null)</div>
+                        <div class="login-menu-padding pull-left">@Html.ActionLink("help", "Help", defaultControllerName, null, null)</div>
+                        @using (Html.BeginForm("SignOut", "Account", FormMethod.Post, new { id = "logoutForm", @class = "pull-right" })) {
+                            @Html.AntiForgeryToken()
+                            <a href="javascript:document.getElementById('logoutForm').submit()">sign out</a>
+                        }
+                    </text>
+                } else {
+                    <div class="login-menu-padding pull-left">@Html.ActionLink("help", "Help", defaultControllerName, null, null)</div>
+                    <div class="login-menu-padding pull-left">@Html.ActionLink("sign in", "SignIn", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</div>
+                }
+            </div>
+
+            <div class="navbar-collapse collapse @if (@ViewContext.RouteData.GetRequiredString("action") == "Index") { <text>in</text> } navbar-collapse-menu">
+                <ul class="nav navbar-nav navbar-right">
+            @if (User.CanSeeHomePage())
+            {
+                    <li @if (ViewBag.ActiveManuItem == AccountMenuItems.Home) { @Html.AttributeEncode("class=active"); }>
+                        <a href="@Url.Action("Index", "MyChhc")"> <span class="glyphicon glyphicon-home"></span> Home </a>
+                    </li>
+            }
+            @if (User.CanAccessUsers() || User.CanAccessPatients() || User.CanAccessRoles())
+            {
+                    <li @if (ViewBag.ActiveManuItem == AccountMenuItems.Users || ViewBag.ActiveManuItem == AccountMenuItems.Patients || ViewBag.ActiveManuItem == AccountMenuItems.Roles)
+                        {
+                            @Html.AttributeEncode("class='active dropdown'")
+                        }
+                        else
+                        {
+                            @Html.AttributeEncode("class='dropdown'")
+                        }>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-users"></i> People <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            @if (User.CanAccessPatients())
+                            {
+                                <li><a href="@Url.Action("All", "Patients")"> <i class="icon-hospital"></i> Patients </a></li>
+                            }
+                            @if (User.CanAccessUsers())
+                            {
+                                <li><a href="@Url.Action("Users", defaultControllerName)"> <i class="icon-user"></i> Users </a></li>
+                            }
+                            @if (User.CanAccessRoles())
+                            {
+                                <li><a href="@Url.Action("ViewRoles", defaultControllerName)"> <i class="icon-users"></i> Roles </a></li>
+                            }
+                        </ul>
+                    </li>
+            }
+            @if (User.CanManageTrainings())
+            {
+                    <li @if (ViewBag.ActiveManuItem == AccountMenuItems.Trainings) { @Html.AttributeEncode("class=active"); }>
+                        <a href="@Url.Action("Trainings", defaultControllerName)"> <i class="icon-monitor"></i> Trainings </a>
+                    </li>
+            }
+            else if (User.CanViewNotEditTraining())
+            {
+                    <li @if (ViewBag.ActiveManuItem == AccountMenuItems.Trainings) { @Html.AttributeEncode("class=active"); }>
+                        <a href="@Url.Action("Trainings", defaultControllerName)"> <i class="icon-monitor"></i> Trainings @if (Model.NotCompletedTrainingsCount > 0) {<span class="badge">@Model.NotCompletedTrainingsCount</span>}</a>
+                    </li>
+            }
+            @if (User.CanManageCaseConferences())
+            {
+                    <li @if (ViewBag.ActiveManuItem == AccountMenuItems.CaseConferences) { @Html.AttributeEncode("class=active"); }>
+                        <a href="@Url.Action("Compose", "CaseConferences")"> <i class="icon-attach"></i> Case Conf </a>
+                    </li>
+            }
+            else if (User.CanViewNotEditCaseConference())
+            {
+                    <li @if (ViewBag.ActiveManuItem == AccountMenuItems.CaseConferences) { @Html.AttributeEncode("class=active"); }>
+                        <a href="@Url.Action("All", "CaseConferences")"> <i class="icon-attach"></i> Case Conferences @if (Model.NotFilledCaseConferencesCount > 0) {<span class="badge">@Model.NotFilledCaseConferencesCount</span>}</a>
+                    </li>
+            }
+                    <li @if (ViewBag.ActiveManuItem == AccountMenuItems.Documents) { @Html.AttributeEncode("class=active"); }>
+                        <a href="@Url.Action("All", "Document")"> <i class="icon-docs"></i> Docs @if (Model.DocumentsCount > 0) {<span class="badge">@Model.DocumentsCount</span>}</a>
+                    </li>
+            @if (User.CanEditBlogs())
+            {
+                    <li @if (ViewBag.ActiveManuItem == AccountMenuItems.Blogs) { @Html.AttributeEncode("class=active"); }>
+                        <a href="@Url.Action("All", "Blog")"> <i class="icon-comment"></i> Blogs </a>
+                    </li>
+            }
+            @if (User.CanViewJobs())
+            {
+                    <li @if (ViewBag.ActiveManuItem == AccountMenuItems.Jobs) { @Html.AttributeEncode("class=active"); }>
+                        <a href="@Url.Action("Index", "Job")"> <i class="icon-paper-plane"></i> Jobs </a>
+                    </li>
+            }
+            @{
+                var viewContextController = ViewContext.Controller;
+                if (viewContextController is CHHC.Web.Controllers.HomeController)
+                {
+                    <li class="security-menu-item">
+                        @Html.ActionLink("My CHHC", landingActionName, landingControllerName, null, null)
+                    </li>
+                }
+                    <li class="security-menu-item">
+                        @Html.ActionLink("Change Password", "ChangePassword", "Account", null, null)
+                    </li>
+                    <li class="security-menu-item">
+                        @Html.ActionLink("Help", "Help", defaultControllerName, null, null)
+                    </li>
+                    <li class="security-menu-item">
+                        @Html.ActionLink("Sign out", "SignOut", "Account", null, null)
+                    </li>
+            }
+                </ul>
+            </div>
+}

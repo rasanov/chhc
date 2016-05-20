@@ -1,0 +1,200 @@
+﻿@using CHHC.Web.Models;
+@model Quiz
+@{
+    ViewBag.Title = "Training '" + @Model.TrainingTitle + "' > Quiz";
+}
+
+<div class="container page page-title-background mychhc">
+    <h2 class="page-title">@Html.Raw(CHHC.Web.ViewHelper.PrepareTitle(ViewBag.Title))</h2>
+    @using (Html.BeginForm())
+    {
+        int questionNumber = 1;
+        <div class="container page-content">
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.Partial("_MessagePartial")
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.TrainingId)
+                    @Html.HiddenFor(x => x.TrainingTitle)
+                    @foreach (var question in Model.Questions)
+                    {
+                        <div class="form-group">
+                            @Html.Label("Question #" + questionNumber, new { @class = "control-label" })
+                            <div class="input-group">
+                                @Html.TextBox("Question" + questionNumber, question.Question, new { @class = "form-control", @placeholder = "Question #" + questionNumber })
+                                <span class="input-group-btn">
+                                    <a href="javascript:{}" onclick="return deleteQuestion(this)" class="btn btn-danger">Delete</a>
+                                </span>
+                            </div>
+                        </div>
+                        int answerNumber = 1;
+                        string checkboxName;
+                        string textboxName;
+                        <div class="question-body">
+                            <div class="row">
+                                <div class="col-md-offset-1 col-md-11">
+                                    @Html.Label("Answers (checked answers are correct answers for this question)", new { @class = "control-label" })
+                                    
+                                    @foreach (var answer in question.Answers)
+                                    {
+                                        checkboxName = "Question" + @questionNumber + "Answer" + @answerNumber + "IsCorrect";
+                                        textboxName = "Question" + @questionNumber + "Answer" + @answerNumber;
+                                            
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <input type="checkbox" name="@checkboxName" @(answer.IsCorrect ? " checked='checked'" : string.Empty)>
+                                                </span>
+                                                @Html.TextBox(textboxName, answer.Text, new { @class = "form-control", @placeholder = "Answer #" + answerNumber })
+                                                <span class="input-group-btn">
+                                                    <a href="javascript:{}" onclick="return deleteAnswer(this)" class="btn btn-danger">Delete</a>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        answerNumber++;
+                                    }
+                                    @{
+                                    checkboxName = "Question" + @questionNumber + "Answer" + @answerNumber + "IsCorrect";
+                                    textboxName = "Question" + @questionNumber + "Answer" + @answerNumber;
+                                    }
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-offset-1 col-md-11">
+                                    @Html.Hidden("questionNumber", @questionNumber)
+                                    @Html.Hidden("answerNumber", @answerNumber)
+                                    <a href="javascript:{}" onclick="return addAnswer(this)" class="btn btn-primary">Add Answer</a>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        questionNumber++;
+                    }
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.Hidden("maxQuestionNumber", @questionNumber)
+                    <a href="javascript:{}" onclick="return addQuestion(this)" class="btn btn-primary">Add Question</a>
+                    
+                    <br /><br />
+                    <button type="submit" class="btn btn-primary" name="Command" value="Save">Save</button>
+                    @Html.ActionLink("Back", "Trainings", null, new { @class = "btn btn-default" })
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="hidden">
+    <div id="questionTemplate">
+                    <div class="form-group">
+                        @Html.Label("Question #QUESTION_NUMBER", new { @class = "control-label" })
+                        <div class="input-group">
+                            <input type="text" name="QUESTION_TEXTBOX_NAME_PLACEHOLDER" id="QUESTION_TEXTBOX_NAME_PLACEHOLDER" placeholder="Question #QUESTION_NUMBER" class="form-control" value="">
+                            <span class="input-group-btn">
+                                <a href="javascript:{}" onclick="return deleteQuestion(this)" class="btn btn-danger">Delete</a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="question-body">
+                        <div class="row">
+                            <div class="col-md-offset-1 col-md-11">
+                                @Html.Label("Answers (checked answers are correct answers for this question)", new { @class = "control-label" })
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <input type="checkbox" name="ANSWER_1_CHECKBOX_NAME_PLACEHOLDER" id="ANSWER_1_CHECKBOX_NAME_PLACEHOLDER">
+                                        </span>
+                                        <input type="text" name="ANSWER_1_TEXTBOX_NAME_PLACEHOLDER" id="ANSWER_1_TEXTBOX_NAME_PLACEHOLDER" placeholder="Answer #1" class="form-control" value="">
+                                        <span class="input-group-btn">
+                                            <a href="javascript:{}" onclick="return deleteAnswer(this)" class="btn btn-danger">Delete</a>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <input type="checkbox" name="ANSWER_2_CHECKBOX_NAME_PLACEHOLDER" id="ANSWER_2_CHECKBOX_NAME_PLACEHOLDER">
+                                        </span>
+                                        <input type="text" name="ANSWER_2_TEXTBOX_NAME_PLACEHOLDER" id="ANSWER_2_TEXTBOX_NAME_PLACEHOLDER" placeholder="Answer #2" class="form-control" value="">
+                                        <span class="input-group-btn">
+                                            <a href="javascript:{}" onclick="return deleteAnswer(this)" class="btn btn-danger">Delete</a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-offset-1 col-md-11">
+                                <input type="hidden" name="questionNumber" id="questionNumber" value="QUESTION_NUMBER" />
+                                <input type="hidden" name="answerNumber" id="answerNumber" value="3" />
+                                <a href="javascript:{}" onclick="return addAnswer(this)" class="btn btn-primary">Add Answer</a>
+                            </div>
+                        </div>
+                    </div>
+    </div>
+    <div id="answerTemplate">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <input type="checkbox" name="ANSWER_CHECKBOX_NAME_PLACEHOLDER" id="ANSWER_CHECKBOX_NAME_PLACEHOLDER">
+                                        </span>
+                                        <input type="text" name="ANSWER_TEXTBOX_NAME_PLACEHOLDER" id="ANSWER_TEXTBOX_NAME_PLACEHOLDER" placeholder="Answer #ANSWER_NUMBER" class="form-control" value="">
+                                        <span class="input-group-btn">
+                                            <a href="javascript:{}" onclick="return deleteAnswer(this)" class="btn btn-danger">Delete</a>
+                                        </span>
+                                    </div>
+                                </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        function addQuestion(o) {
+            var questionNumber = $(o).parent().find("#maxQuestionNumber").val();
+
+            var questionTemplate = $("#questionTemplate").html();
+            questionTemplate = questionTemplate.replace(/QUESTION_TEXTBOX_NAME_PLACEHOLDER/g, "Question" + questionNumber);
+            questionTemplate = questionTemplate.replace(/ANSWER_1_CHECKBOX_NAME_PLACEHOLDER/g, "Question" + questionNumber + "Answer1IsCorrect");
+            questionTemplate = questionTemplate.replace(/ANSWER_1_TEXTBOX_NAME_PLACEHOLDER/g, "Question" + questionNumber + "Answer1");
+            questionTemplate = questionTemplate.replace(/ANSWER_2_CHECKBOX_NAME_PLACEHOLDER/g, "Question" + questionNumber + "Answer2IsCorrect");
+            questionTemplate = questionTemplate.replace(/ANSWER_2_TEXTBOX_NAME_PLACEHOLDER/g, "Question" + questionNumber + "Answer2");
+            questionTemplate = questionTemplate.replace(/QUESTION_NUMBER/g, questionNumber);
+            $(o).parent().parent().parent().children(":first").children(":first").append(questionTemplate);
+
+            var questionNumberInt = parseInt(questionNumber, 10);
+            questionNumberInt++;
+            $(o).parent().find("#maxQuestionNumber").val(questionNumberInt.toString());
+        }
+        function deleteQuestion(o) {
+            $(o).parent().parent().parent().next().hide();
+            $(o).parent().parent().parent().next().find("input[type=text]").attr("disabled", true);
+
+            $(o).parent().parent().parent().hide();
+            $(o).parent().parent().parent().find("input[type=text]").attr("disabled", true);
+        }
+
+        function addAnswer(o) {
+            var questionNumber = $(o).parent().find("#questionNumber").val();
+            var answerNumber = $(o).parent().find("#answerNumber").val();
+
+            var answerTemplate = $("#answerTemplate").html();
+            answerTemplate = answerTemplate.replace(/ANSWER_CHECKBOX_NAME_PLACEHOLDER/g, "Question" + questionNumber + "Answer" + answerNumber + "IsCorrect");
+            answerTemplate = answerTemplate.replace(/ANSWER_TEXTBOX_NAME_PLACEHOLDER/g, "Question" + questionNumber + "Answer" + answerNumber);
+            answerTemplate = answerTemplate.replace("ANSWER_NUMBER", answerNumber);
+            $(o).parent().parent().parent().children(":first").children(":first").append(answerTemplate);
+
+            var answerNumberInt = parseInt(answerNumber, 10);
+            answerNumberInt++;
+            $(o).parent().find("#answerNumber").val(answerNumberInt.toString());
+        }
+        function deleteAnswer(o) {
+            $(o).parent().parent().parent().hide();
+            $(o).parent().parent().find("input[type=text]").attr("disabled",true);
+        }
+    </script>
+}

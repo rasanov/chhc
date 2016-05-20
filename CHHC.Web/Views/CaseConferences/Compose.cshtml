@@ -1,0 +1,388 @@
+﻿@using CHHC.DomainModel
+@using CHHC.Web.Models;
+@model ViewTemplateCaseConference
+@{
+    ViewBag.Title = "Case Conference form";
+}
+
+<div class="container page page-title-background mychhc">    
+    <h2 class="page-title">@Html.Raw(CHHC.Web.ViewHelper.PrepareTitle(ViewBag.Title))</h2>
+    @using (Html.BeginForm())
+    {
+        int questionNumber = 1;
+        <div class="container page-content">
+            <div class="row">
+                <div class="col-md-12">
+                    <br/>
+                    @Html.Partial("_MessagePartial")
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("Id", Model.Id)
+                    @foreach (var question in Model.Questions)
+                    {
+                        if (question.Type == TemplateCaseConferenceQuestionType.Text)
+                        {
+                            @Html.Hidden("QuestionType" + questionNumber, TemplateCaseConferenceQuestionType.Text.ToString())
+                            var textQuestion = question.TemplateCaseConferenceTextQuestion;
+                            <div class="form-group">
+                                @Html.Label("Question #" + questionNumber + " of type 'text answer'", new { @class = "control-label" }) <i class="icon-pencil"></i>
+                                <div class="input-group">
+                                    @Html.TextBox("Question" + questionNumber, textQuestion.Text, new { @class = "form-control", @placeholder = "Question #" + questionNumber })
+                                    <span class="input-group-btn">
+                                        <a href="javascript:{}" onclick=" return deleteTextQuestion(this) " class="btn btn-danger">Delete</a>
+                                    </span>
+                                </div>
+                            </div>
+                        }
+                        else if (question.Type == TemplateCaseConferenceQuestionType.Date)
+                        {
+                            @Html.Hidden("QuestionType" + questionNumber, TemplateCaseConferenceQuestionType.Date.ToString())
+                            var dateQuestion = question.TemplateCaseConferenceDateQuestion;
+                            <div class="form-group">
+                                @Html.Label("Question #" + questionNumber + " of type 'date answer'", new { @class = "control-label" }) <i class="icon-calendar"></i>
+                                <div class="input-group">
+                                    @Html.TextBox("Question" + questionNumber, dateQuestion.Text, new { @class = "form-control", @placeholder = "Question #" + questionNumber })
+                                    <span class="input-group-btn">
+                                        <a href="javascript:{}" onclick=" return deleteDateQuestion(this) " class="btn btn-danger">Delete</a>
+                                    </span>
+                                </div>
+                            </div>
+                        }
+                        else if (question.Type == TemplateCaseConferenceQuestionType.Multichoice)
+                        {
+                            @Html.Hidden("QuestionType" + questionNumber, TemplateCaseConferenceQuestionType.Multichoice.ToString())
+                            var multichoiceQuestion = question.TemplateCaseConferenceMultichoiceQuestion;
+                            <div class="form-group">
+                                @Html.Label("Question #" + questionNumber + " of type 'multi-choice answer'", new { @class = "control-label" }) <i class="icon-list-bullet"></i>
+                                <div class="input-group">
+                                    @Html.TextBox("Question" + questionNumber, multichoiceQuestion.Text, new { @class = "form-control", @placeholder = "Question #" + questionNumber })
+                                    <span class="input-group-btn">
+                                        <a href="javascript:{}" onclick=" return deleteMultichoiceQuestion(this) " class="btn btn-danger">Delete</a>
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            int answerNumber = 1;
+                            <div class="question-body">
+                                <div class="row">
+                                    <div class="col-md-offset-1 col-md-11">
+                                        @Html.Label("Answers", new { @class = "control-label" })
+                                    
+                                        @foreach (var answer in multichoiceQuestion.Answers)
+                                        {
+                                            var textboxName = "Question" + @questionNumber + "Answer" + @answerNumber;
+                                            
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    @Html.TextBox(textboxName, answer.Text, new { @class = "form-control", @placeholder = "Answer #" + answerNumber })
+                                                    <span class="input-group-btn">
+                                                        <a href="javascript:{}" onclick="return deleteAnswer(this)" class="btn btn-danger">Delete</a>
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            answerNumber++;
+                                        }
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-offset-1 col-md-11">
+                                        @Html.Hidden("questionNumber", @questionNumber)
+                                        @Html.Hidden("answerNumber", @answerNumber)
+                                        <a href="javascript:{}" onclick="return addAnswer(this)" class="btn btn-primary">Add Answer</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else if (question.Type == TemplateCaseConferenceQuestionType.MultichoiceText)
+                        {
+                            @Html.Hidden("QuestionType" + questionNumber, TemplateCaseConferenceQuestionType.MultichoiceText.ToString())
+                            var multichoiceTextQuestion = question.TemplateCaseConferenceMultichoiceTextQuestion;
+                            <div class="form-group">
+                                @Html.Label("Question #" + questionNumber + " of type 'multi-choice and text answer'", new { @class = "control-label" }) <i class="icon-list-bullet"></i>+<i class="icon-pencil"></i>
+                                <div class="input-group">
+                                    @Html.TextBox("Question" + questionNumber, multichoiceTextQuestion.Text, new { @class = "form-control", @placeholder = "Question #" + questionNumber })
+                                    <span class="input-group-btn">
+                                        <a href="javascript:{}" onclick=" return deleteMultichoiceTextQuestion(this) " class="btn btn-danger">Delete</a>
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            int answerNumber = 1;
+                            <div class="question-body">
+                                <div class="row">
+                                    <div class="col-md-offset-1 col-md-11">
+                                        @Html.Label("Answers", new { @class = "control-label" })
+                                    
+                                        @foreach (var answer in multichoiceTextQuestion.Answers)
+                                        {
+                                            var textboxName = "Question" + @questionNumber + "Answer" + @answerNumber;
+                                            
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    @Html.TextBox(textboxName, answer.Text, new { @class = "form-control", @placeholder = "Answer #" + answerNumber })
+                                                    <span class="input-group-btn">
+                                                        <a href="javascript:{}" onclick="return deleteAnswer(this)" class="btn btn-danger">Delete</a>
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            answerNumber++;
+                                        }
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-offset-1 col-md-11">
+                                        @Html.Hidden("questionNumber", @questionNumber)
+                                        @Html.Hidden("answerNumber", @answerNumber)
+                                        <a href="javascript:{}" onclick="return addAnswer(this)" class="btn btn-primary">Add Answer</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        questionNumber++;
+                    }
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.Hidden("maxQuestionNumber", @questionNumber)
+                    <a href="javascript:{}" onclick="return addTextQuestion(this)" class="btn btn-primary"> <i class="icon-pencil"></i> Add Text Question</a>
+                    <a href="javascript:{}" onclick="return addDateQuestion(this)" class="btn btn-primary"> <i class="icon-calendar"></i> Add Date Question</a>
+                    <a href="javascript:{}" onclick="return addMultichoiceQuestion(this)" class="btn btn-primary"> <i class="icon-list-bullet"></i> Add Multichoice Question</a>
+                    <a href="javascript:{}" onclick="return addMultichoiceTextQuestion(this)" class="btn btn-primary"> <i class="icon-list-bullet"></i>+<i class="icon-pencil"></i> Add Multichoice Text Question</a>
+                    
+                    <br /><br />
+                    <button type="submit" class="btn btn-primary" name="Command" value="Save">Save</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="hidden">
+    <div id="textQuestionTemplate">
+                    <div class="form-group">
+                        @Html.Hidden("QUESTION_TYPE_HIDDEN_NAME_PLACEHOLDER", TemplateCaseConferenceQuestionType.Text.ToString())
+                        @Html.Label("Question #QUESTION_NUMBER of type 'text answer'", new { @class = "control-label" }) <i class="icon-pencil"></i>
+                        <div class="input-group">
+                            @Html.TextBox("QUESTION_TEXTBOX_NAME_PLACEHOLDER", string.Empty, new { @class = "form-control", @placeholder = "Question #QUESTION_NUMBER" })
+                            <span class="input-group-btn">
+                                <a href="javascript:{}" onclick="return deleteTextQuestion(this)" class="btn btn-danger">Delete</a>
+                            </span>
+                        </div>
+                    </div>
+    </div>
+    <div id="dateQuestionTemplate">
+                    <div class="form-group">
+                        @Html.Hidden("QUESTION_TYPE_HIDDEN_NAME_PLACEHOLDER", TemplateCaseConferenceQuestionType.Date.ToString())
+                        @Html.Label("Question #QUESTION_NUMBER of type 'date answer'", new { @class = "control-label" }) <i class="icon-calendar"></i>
+                        <div class="input-group">
+                            @Html.TextBox("QUESTION_TEXTBOX_NAME_PLACEHOLDER", string.Empty, new { @class = "form-control", @placeholder = "Question #QUESTION_NUMBER" })
+                            <span class="input-group-btn">
+                                <a href="javascript:{}" onclick="return deleteDateQuestion(this)" class="btn btn-danger">Delete</a>
+                            </span>
+                        </div>
+                    </div>
+    </div>
+    <div id="multichoiceQuestionTemplate">
+                    <div class="form-group">
+                        @Html.Hidden("QUESTION_TYPE_HIDDEN_NAME_PLACEHOLDER", TemplateCaseConferenceQuestionType.Multichoice.ToString())
+                        @Html.Label("Question #QUESTION_NUMBER of type 'multi-choice answer'", new { @class = "control-label" }) <i class="icon-list-bullet"></i>
+                        <div class="input-group">
+                            @Html.TextBox("QUESTION_TEXTBOX_NAME_PLACEHOLDER", string.Empty, new { @class = "form-control", @placeholder = "Question #QUESTION_NUMBER" })
+                            <span class="input-group-btn">
+                                <a href="javascript:{}" onclick="return deleteMultichoiceQuestion(this)" class="btn btn-danger">Delete</a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="question-body">
+                        <div class="row">
+                            <div class="col-md-offset-1 col-md-11">
+                                @Html.Label("Answers", new { @class = "control-label" })
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        @Html.TextBox("ANSWER_1_TEXTBOX_NAME_PLACEHOLDER", string.Empty, new { @class = "form-control", @placeholder = "Answer #1" })
+                                        <span class="input-group-btn">
+                                            <a href="javascript:{}" onclick="return deleteAnswer(this)" class="btn btn-danger">Delete</a>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        @Html.TextBox("ANSWER_2_TEXTBOX_NAME_PLACEHOLDER", string.Empty, new { @class = "form-control", @placeholder = "Answer #2" })
+                                        <span class="input-group-btn">
+                                            <a href="javascript:{}" onclick="return deleteAnswer(this)" class="btn btn-danger">Delete</a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-offset-1 col-md-11">
+                                @Html.Hidden("questionNumber", "QUESTION_NUMBER")
+                                @Html.Hidden("answerNumber", "3")
+                                <a href="javascript:{}" onclick="return addAnswer(this)" class="btn btn-primary">Add Answer</a>
+                            </div>
+                        </div>
+                    </div>
+    </div>
+    <div id="multichoiceTextQuestionTemplate">
+                    <div class="form-group">
+                        @Html.Hidden("QUESTION_TYPE_HIDDEN_NAME_PLACEHOLDER", TemplateCaseConferenceQuestionType.MultichoiceText.ToString())
+                        @Html.Label("Question #QUESTION_NUMBER of type 'multi-choice and text answer'", new { @class = "control-label" }) <i class="icon-list-bullet"></i>+<i class="icon-pencil"></i>
+                        <div class="input-group">
+                            @Html.TextBox("QUESTION_TEXTBOX_NAME_PLACEHOLDER", string.Empty, new { @class = "form-control", @placeholder = "Question #QUESTION_NUMBER" })
+                            <span class="input-group-btn">
+                                <a href="javascript:{}" onclick="return deleteMultichoiceTextQuestion(this)" class="btn btn-danger">Delete</a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="question-body">
+                        <div class="row">
+                            <div class="col-md-offset-1 col-md-11">
+                                @Html.Label("Answers", new { @class = "control-label" })
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        @Html.TextBox("ANSWER_1_TEXTBOX_NAME_PLACEHOLDER", string.Empty, new { @class = "form-control", @placeholder = "Answer #1" })
+                                        <span class="input-group-btn">
+                                            <a href="javascript:{}" onclick="return deleteAnswer(this)" class="btn btn-danger">Delete</a>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        @Html.TextBox("ANSWER_2_TEXTBOX_NAME_PLACEHOLDER", string.Empty, new { @class = "form-control", @placeholder = "Answer #2" })
+                                        <span class="input-group-btn">
+                                            <a href="javascript:{}" onclick="return deleteAnswer(this)" class="btn btn-danger">Delete</a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-offset-1 col-md-11">
+                                @Html.Hidden("questionNumber", "QUESTION_NUMBER")
+                                @Html.Hidden("answerNumber", "3")
+                                <a href="javascript:{}" onclick="return addAnswer(this)" class="btn btn-primary">Add Answer</a>
+                            </div>
+                        </div>
+                    </div>
+    </div>
+    <div id="answerTemplate">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" name="ANSWER_TEXTBOX_NAME_PLACEHOLDER" id="ANSWER_TEXTBOX_NAME_PLACEHOLDER" placeholder="Answer #ANSWER_NUMBER" class="form-control" value="">
+                                        <span class="input-group-btn">
+                                            <a href="javascript:{}" onclick="return deleteAnswer(this)" class="btn btn-danger">Delete</a>
+                                        </span>
+                                    </div>
+                                </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        function addTextQuestion(o) {
+            var questionNumber = $(o).parent().find("#maxQuestionNumber").val();
+
+            var questionTemplate = $("#textQuestionTemplate").html();
+            questionTemplate = questionTemplate.replace(/QUESTION_TYPE_HIDDEN_NAME_PLACEHOLDER/g, "QuestionType" + questionNumber);
+            questionTemplate = questionTemplate.replace(/QUESTION_TEXTBOX_NAME_PLACEHOLDER/g, "Question" + questionNumber);
+            questionTemplate = questionTemplate.replace(/QUESTION_NUMBER/g, questionNumber);
+            $(o).parent().parent().parent().children(":first").children(":first").append(questionTemplate);
+
+            var questionNumberInt = parseInt(questionNumber, 10);
+            questionNumberInt++;
+            $(o).parent().find("#maxQuestionNumber").val(questionNumberInt.toString());
+        }
+        function deleteTextQuestion(o) {
+            $(o).parent().parent().parent().hide();
+            $(o).parent().parent().parent().find("input[type=text]").attr("disabled", true);
+        }
+
+        function addDateQuestion(o) {
+            var questionNumber = $(o).parent().find("#maxQuestionNumber").val();
+
+            var questionTemplate = $("#dateQuestionTemplate").html();
+            questionTemplate = questionTemplate.replace(/QUESTION_TYPE_HIDDEN_NAME_PLACEHOLDER/g, "QuestionType" + questionNumber);
+            questionTemplate = questionTemplate.replace(/QUESTION_TEXTBOX_NAME_PLACEHOLDER/g, "Question" + questionNumber);
+            questionTemplate = questionTemplate.replace(/QUESTION_NUMBER/g, questionNumber);
+            $(o).parent().parent().parent().children(":first").children(":first").append(questionTemplate);
+
+            var questionNumberInt = parseInt(questionNumber, 10);
+            questionNumberInt++;
+            $(o).parent().find("#maxQuestionNumber").val(questionNumberInt.toString());
+        }
+        function deleteDateQuestion(o) {
+            $(o).parent().parent().parent().hide();
+            $(o).parent().parent().parent().find("input[type=text]").attr("disabled", true);
+        }
+
+        function addMultichoiceQuestion(o) {
+            var questionNumber = $(o).parent().find("#maxQuestionNumber").val();
+
+            var questionTemplate = $("#multichoiceQuestionTemplate").html();
+            questionTemplate = questionTemplate.replace(/QUESTION_TYPE_HIDDEN_NAME_PLACEHOLDER/g, "QuestionType" + questionNumber);
+            questionTemplate = questionTemplate.replace(/QUESTION_TEXTBOX_NAME_PLACEHOLDER/g, "Question" + questionNumber);
+            questionTemplate = questionTemplate.replace(/ANSWER_1_TEXTBOX_NAME_PLACEHOLDER/g, "Question" + questionNumber + "Answer1");
+            questionTemplate = questionTemplate.replace(/ANSWER_2_TEXTBOX_NAME_PLACEHOLDER/g, "Question" + questionNumber + "Answer2");
+            questionTemplate = questionTemplate.replace(/QUESTION_NUMBER/g, questionNumber);
+            $(o).parent().parent().parent().children(":first").children(":first").append(questionTemplate);
+
+            var questionNumberInt = parseInt(questionNumber, 10);
+            questionNumberInt++;
+            $(o).parent().find("#maxQuestionNumber").val(questionNumberInt.toString());
+        }
+        function deleteMultichoiceQuestion(o) {
+            $(o).parent().parent().parent().next().hide();
+            $(o).parent().parent().parent().next().find("input[type=text]").attr("disabled", true);
+
+            $(o).parent().parent().parent().hide();
+            $(o).parent().parent().parent().find("input[type=text]").attr("disabled", true);
+        }
+
+        function addMultichoiceTextQuestion(o) {
+            var questionNumber = $(o).parent().find("#maxQuestionNumber").val();
+
+            var questionTemplate = $("#multichoiceTextQuestionTemplate").html();
+            questionTemplate = questionTemplate.replace(/QUESTION_TYPE_HIDDEN_NAME_PLACEHOLDER/g, "QuestionType" + questionNumber);
+            questionTemplate = questionTemplate.replace(/QUESTION_TEXTBOX_NAME_PLACEHOLDER/g, "Question" + questionNumber);
+            questionTemplate = questionTemplate.replace(/ANSWER_1_TEXTBOX_NAME_PLACEHOLDER/g, "Question" + questionNumber + "Answer1");
+            questionTemplate = questionTemplate.replace(/ANSWER_2_TEXTBOX_NAME_PLACEHOLDER/g, "Question" + questionNumber + "Answer2");
+            questionTemplate = questionTemplate.replace(/QUESTION_NUMBER/g, questionNumber);
+            $(o).parent().parent().parent().children(":first").children(":first").append(questionTemplate);
+
+            var questionNumberInt = parseInt(questionNumber, 10);
+            questionNumberInt++;
+            $(o).parent().find("#maxQuestionNumber").val(questionNumberInt.toString());
+        }
+        function deleteMultichoiceTextQuestion(o) {
+            $(o).parent().parent().parent().next().hide();
+            $(o).parent().parent().parent().next().find("input[type=text]").attr("disabled", true);
+
+            $(o).parent().parent().parent().hide();
+            $(o).parent().parent().parent().find("input[type=text]").attr("disabled", true);
+        }
+
+        function addAnswer(o) {
+            var questionNumber = $(o).parent().find("#questionNumber").val();
+            var answerNumber = $(o).parent().find("#answerNumber").val();
+
+            var answerTemplate = $("#answerTemplate").html();
+            answerTemplate = answerTemplate.replace(/ANSWER_TEXTBOX_NAME_PLACEHOLDER/g, "Question" + questionNumber + "Answer" + answerNumber);
+            answerTemplate = answerTemplate.replace("ANSWER_NUMBER", answerNumber);
+            $(o).parent().parent().parent().children(":first").children(":first").append(answerTemplate);
+
+            var answerNumberInt = parseInt(answerNumber, 10);
+            answerNumberInt++;
+            $(o).parent().find("#answerNumber").val(answerNumberInt.toString());
+        }
+        function deleteAnswer(o) {
+            $(o).parent().parent().parent().hide();
+            $(o).parent().parent().find("input[type=text]").attr("disabled",true);
+        }
+    </script>
+}

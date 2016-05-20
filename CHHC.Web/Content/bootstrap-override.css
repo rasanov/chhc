@@ -1,0 +1,13 @@
+body { background-color: #ffffff}
+h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 { color: #005a81 }
+.navbar { margin-bottom: 0px; }
+.navbar-header {margin-top:4px;}
+.navbar-brand { padding: 0px !important; }
+.navbar-default { background-color: #ffffff; border-bottom: 3px solid #b4252d; height: auto;}
+.navbar-default .navbar-toggle { border-color:Gray !important; border-width: 2px !important;}
+.navbar-default .navbar-toggle .icon-bar { background-color:Gray !important; }
+.navbar-default .navbar-toggle  { margin-right: 5px;}
+.navbar-collapse { border-top: solid 0px  white;}
+.modal-footer .btn {
+    margin-bottom: 0;
+}

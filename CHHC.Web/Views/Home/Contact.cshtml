@@ -1,0 +1,67 @@
+﻿@model CHHC.Web.Models.Contact
+@{
+    ViewBag.Title = "Central Home Health Care - Contact Us";
+    ViewBag.Description = "We are to your service 24 hours 7 days per week";
+    ViewBag.Keywords = "Home Health Care Newton";
+}
+
+
+
+<div class="container page page-title-background contact">    
+    <h2 class="page-title">Contact Us</h2>
+    <div class="container page-content">		
+		<div class="row columns last-row">
+			<div class="col-sm-6">                
+                @if (Model.Status == "success")
+                {
+                    <p class="text-success">@Model.Notification</p>
+                }
+                else if (Model.Status == "emptyEmail")
+                {
+                    <p class="text-warning">@Model.Notification</p>
+                }
+                else if (Model.Status == "error")
+                {
+                    <p class="text-danger">@Model.Notification</p>
+                }
+                @using (Html.BeginForm("ContactSubmit", "Home"))
+                {
+					<div class="form-group">
+						<label class="control-label" for="name">Full name</label>
+                        @Html.TextBox("name", null, new { @class="form-control", @placeholder="Full name" })
+					</div>
+					<div class="form-group@((Model.Status == "emptyEmail") ? " has-warning" : string.Empty)">
+						<label class="control-label" for="email">Email</label>
+						@Html.TextBox("email", null, new { @type = "email", @class = "form-control", @placeholder = "Email" })
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="phone">Phone</label>
+						@Html.TextBox("phone", null, new { @type = "tel", @class = "form-control", @placeholder = "Phone" })
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="message">Message</label>
+						@Html.TextArea("message", null, new { @rows = "3", @class = "form-control" })
+					</div>
+					<button type="submit" class="btn btn-default">Submit</button>
+				}
+			</div>
+			<div class="col-sm-6">
+				<h3>Central Home Health Care</h3>
+				<p>90 Oak Street, Suite 405, Newton, MA 02464</p>
+				<p>Phone: 617-559-0200</p>
+				<p>Fax: 617-663-6319</p>
+				<p class="last">E-mail: info@centralhomehealthcare.com</p>
+				<h3>Working Hours</h3>
+				<p>We are to your service 24 hours 7 days per week.</p>
+				<h3>Office Hours</h3>
+				<p>Monday: 9am - 5pm</p>
+				<p>Tuesday: 9am - 5pm</p>
+				<p>Wednesday: 9am - 5pm</p>
+				<p>Thursday: 9am - 5pm</p>
+				<p>Friday: 9am - 5pm</p>
+				<p>Saturday: closed</p>
+				<p class="last">Sunday: closed</p>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,251 @@
+﻿@using CHHC.Web.Models.JobModels;
+@model ViewJobApplication
+@{
+    ViewBag.Title = "View job application for '" + @Model.ApplicantFirstName + " " + @Model.ApplicantLastName + "'";
+}
+
+<div class="container page page-title-background mychhc">
+    <h2 class="page-title">@Html.Raw(CHHC.Web.ViewHelper.PrepareTitle(ViewBag.Title))</h2>
+    <div class="container page-content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row" style="padding-bottom:40px">
+                    <div class="col-md-3">
+                        <div class="form-group datepicket-holder">
+                            @Html.Label("DateApplied", "Date Applied", new { @class = "control-label" })
+                            @Html.TextBoxFor(x => x.DateFilledAndAgreed, "{0:MM/dd/yyyy}", new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.ApplicantFirstName, new { @class = "control-label" })
+                            @Html.TextBoxFor(x => x.ApplicantFirstName, new { @class = "form-control", @readonly = "" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.ApplicantLastName, new { @class = "control-label" })
+                            @Html.TextBoxFor(x => x.ApplicantLastName, new { @class = "form-control", @readonly = "" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.HowDidYouHear, new { @class = "control-label" })
+                            @Html.DropDownListFor(
+                                            x => x.HowDidYouHear,
+                                            new List<SelectListItem>() {
+                                                new SelectListItem { Text = "Newspaper", Value = "1" },
+                                                new SelectListItem { Text = "Referral", Value = "2" },
+                                                new SelectListItem { Text = "Walk-in", Value = "3" },
+                                                new SelectListItem { Text = "Agency", Value = "4" },
+                                                new SelectListItem { Text = "Friend", Value = "5" },
+                                                new SelectListItem { Text = "Other", Value = "6" }
+                                            },
+                                            new { @class = "form-control", @disabled = "" })
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.HowDidYouHearOther, new { @class = "control-label" })
+                            @Html.TextBoxFor(x => x.HowDidYouHearOther, new { @class = "form-control", @readonly = "" })
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Position, new { @class = "control-label" })
+                            @Html.TextBoxFor(x => x.Position, new { @class = "form-control", @readonly = "" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.PositionType, new { @class = "control-label" })
+                            @Html.DropDownListFor(
+                                            x => x.HowDidYouHear,
+                                            new List<SelectListItem>() {
+                                                new SelectListItem { Text = "Full Time", Value = "1" },
+                                                new SelectListItem { Text = "Part Time", Value = "2" },
+                                                new SelectListItem { Text = "Per Diem", Value = "3" },
+                                                new SelectListItem { Text = "Temporary", Value = "4" }
+                                            },
+                                            new { @class = "form-control", @disabled = "" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.StreetAddress, new { @class = "control-label" })
+                            @Html.TextBoxFor(x => x.StreetAddress, new { @class = "form-control", @readonly = "" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.City, new { @class = "control-label" })
+                            @Html.TextBoxFor(x => x.City, new { @class = "form-control", @readonly = "" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.State, new { @class = "control-label" })
+                            @Html.TextBoxFor(x => x.State, new { @class = "form-control", @readonly = "" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Zip, new { @class = "control-label" })
+                            @Html.TextBoxFor(x => x.Zip, new { @class = "form-control", @readonly = "" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="padding-bottom:40px">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.PhoneHome, new { @class = "control-label" })
+                            @Html.TextBoxFor(x => x.PhoneHome, new { @class = "form-control", @readonly = "" })
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.PhoneCell, new { @class = "control-label" })
+                            @Html.TextBoxFor(x => x.PhoneCell, new { @class = "form-control", @readonly = "" })
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Email, new { @class = "control-label" })
+                            @Html.TextBoxFor(x => x.Email, new { @class = "form-control", @readonly = "" })
+                        </div>
+                    </div>
+                </div>                
+                @for (var i = 0; i < Model.Educations.Count; i++)
+                {
+                    @Html.EditorFor(x => x.Educations[i], "_JobEducation")
+                }
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.SpecialEducation, new { @class = "control-label" })
+                            @Html.TextAreaFor(x => x.SpecialEducation, 3, 20, new { @class = "form-control", @readonly = "" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="padding-bottom:40px">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.Label("License", "Clinical Registration/License", new { @class = "control-label" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.ClinicalLicenseType, new { @class = "control-label" })
+                            @Html.TextBoxFor(x => x.ClinicalLicenseType, new { @class = "form-control", @readonly = "" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.ClinicalLicenseNumber, new { @class = "control-label" })
+                            @Html.TextBoxFor(x => x.ClinicalLicenseNumber, new { @class = "form-control", @readonly = "" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.ClinicalLicenseState, new { @class = "control-label" })
+                            @Html.TextBoxFor(x => x.ClinicalLicenseState, new { @class = "form-control", @readonly = "" })
+                        </div>
+                    </div>
+                </div>
+                @for (var i = 0; i < Model.Works.Count; i++)
+                {
+                    @Html.EditorFor(x => x.Works[i], "_JobExperience")
+                }
+
+                @Html.CheckBoxFor(m => m.Authorized, new { @disabled = "" })
+                @Html.LabelFor(m => m.Authorized, new { @class = "control-label" })
+                <br />
+
+                @Html.CheckBoxFor(m => m.Eligible, new { @disabled = "" })
+                @Html.LabelFor(m => m.Eligible, new { @class = "control-label" })
+                <br />
+
+                @Html.CheckBoxFor(m => m.EmployedBefore, new { @disabled = "" })
+                @Html.LabelFor(m => m.EmployedBefore, new { @class = "control-label" })
+                <br />
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.EmployedBeforePosition, new { @class = "control-label" })
+                            @Html.TextBoxFor(x => x.EmployedBeforePosition, new { @class = "form-control", @readonly = "" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.WhenAvailableToBegin, new { @class = "control-label" })
+                            @Html.TextBoxFor(x => x.WhenAvailableToBegin, new { @class = "form-control", @readonly = "" })
+                        </div>
+                    </div>
+                </div>
+
+                @Html.CheckBoxFor(m => m.EverDischarged, new { @disabled = "" })
+                @Html.LabelFor(m => m.EverDischarged, new { @class = "control-label" })
+                <br />
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.EverDischargedExplanation, new { @class = "control-label" })
+                            @Html.TextBoxFor(x => x.EverDischargedExplanation, new { @class = "form-control", @readonly = "" })
+                        </div>
+                    </div>
+                </div>
+
+                <i>(All offers of employment are conditional upon the satisfactory completion of a criminal background screening and driving records check)</i><br /><br />
+
+                @Html.CheckBoxFor(m => m.EverHadStipulations, new { @disabled = "" })
+                @Html.LabelFor(m => m.EverHadStipulations, new { @class = "control-label" })
+                <br />
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.EverHadStipulationsExplanation, new { @class = "control-label" })
+                            @Html.TextBoxFor(x => x.EverHadStipulationsExplanation, new { @class = "form-control", @readonly = "" })
+                        </div>
+                    </div>
+                </div>
+
+                @Html.CheckBoxFor(m => m.EverSanctioned, new { @disabled = "" })
+                @Html.LabelFor(m => m.EverSanctioned, new { @class = "control-label" })
+                <br />
+
+                @Html.CheckBoxFor(m => m.RelatedToBoard, new { @disabled = "" })
+                @Html.LabelFor(m => m.RelatedToBoard, new { @class = "control-label" })
+                <br />
+
+                @Html.CheckBoxFor(m => m.MayWeContactPresentEmployer, new { @disabled = "" })
+                @Html.LabelFor(m => m.MayWeContactPresentEmployer, new { @class = "control-label" })
+                <br />
+
+                @Html.CheckBoxFor(m => m.MayWeContactPreviousEmployer, new { @disabled = "" })
+                @Html.LabelFor(m => m.MayWeContactPreviousEmployer, new { @class = "control-label" })
+                <br />
+
+                <br />
+
+                @Html.ActionLink("Back", "Index", "Job", new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+</div>

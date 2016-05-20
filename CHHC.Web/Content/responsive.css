@@ -1,0 +1,107 @@
+/* 320/480/600/768/800/1204 */
+/**** Mobile portrait (320x480)         ****/
+@media (max-width:320px) {
+    .hidden-320, .hidden-480 {
+        display: none !important;
+    }
+}
+
+/**** Mobile landscape (480x320)        ****/
+@media all and (min-width:321px) and (max-width:480px) {
+    .hidden-480 {
+        display: none !important;
+    }
+    .navbar-brand-name h2 {
+        font-size: 22px;
+        width: 140px;
+    }
+    .navbar-brand-name {
+        margin-left: 5px !important;
+        margin-top: 20px;
+    }
+}
+
+
+
+/**** Small tablet portrait (600x800)   **** /
+@media all and (min-width:481px) and (max-width:600px)  {}
+/**** Tablet portrait (768x1024)        **** /
+@media all and (min-width:601px) and (max-width:768px)  {}
+/**** Small tablet landscape (800x600)  **** /
+@media all and (min-width:769px) and (max-width:800px)  {}
+/**** Tablet landscape (1024x768)       **** /
+@media all and (min-width:801px) and (max-width:1204px) {}
+****/
+
+
+/**** Custom ********************************/
+@media (max-width:420px) {
+    .hidden-420 {
+        display: none !important;
+    }
+}
+
+@media (max-width:768px) {
+    .navbar-collapse-menu {
+        margin-top: 2px !important;
+    }
+    .navbar-brand-name h2 {
+        line-height: 1;
+        font-weight: bold;
+        font-size: 22px;
+        width: 150px;
+    }
+    .navbar-brand-name {
+        margin-left: 10px !important;
+    }
+}
+
+@media (min-width: 768px ) {
+    .navbar-brand-name h2 {
+        line-height: 1;
+        font-weight: bold;
+        font-size: 26px;
+    }
+}
+
+@media (min-width: /*768px*/ 600px) {
+    .page-content {
+        margin-top: 40px;
+        margin-left: 20px;
+        margin-right: 20px;
+        position: relative;
+        box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
+        padding: 10px 10px 10px 10px;
+    }
+    .page h2.page-title {
+        margin-left: 50px;
+        margin-top: 40px;
+    }
+    .columns .col-md-12, .columns .col-md-9, .columns .col-md-6, .columns .col-md-5, .columns .col-md-4, .columns .col-md-3 {
+        margin-top: 10px;
+    }
+}
+
+@media (min-width: 768px) {
+  li.security-menu-item {
+    display: none;
+  }
+  div.sign-in-out {
+    display: block;
+  }
+}
+
+@media (max-width: 768px) {
+  li.security-menu-item {
+    display: block;
+  }
+  div.sign-in-out {
+    display: none;
+  }
+}
+
+@media (max-width:1000px) {
+    .help img {
+        width: 100%;
+    }
+}

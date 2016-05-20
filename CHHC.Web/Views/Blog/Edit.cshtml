@@ -1,0 +1,46 @@
+﻿@using CHHC.Web.Models;
+@model ViewBlog
+@{
+    ViewBag.Title = "Edit blog '" + @Model.Title + "'";
+}
+
+<div class="container page page-title-background mychhc">
+    <h2 class="page-title">@Html.Raw(CHHC.Web.ViewHelper.PrepareTitle(ViewBag.Title))</h2>
+    <div class="container page-content">
+        <div class="row">
+            <div class="col-md-10">
+                @Html.Partial("_MessagePartial")
+                @using (Html.BeginForm("Edit", "Blog", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary()
+                    @Html.HiddenFor(x => x.Id)
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Title, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.Title, new { @class = "form-control", @placeholder = "Name" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Text, new { @class = "control-label" })
+                        @Html.TextAreaFor(m => m.Text, 15, 30, new { @class = "form-control", @placeholder = "Text", @id = "BlogText" })
+                    </div>
+                    <br />
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    @Html.ActionLink("Back", "All", "Blog", new { @class = "btn btn-default" })
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="/Scripts/tinymce/tinymce.min.js"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea#BlogText',
+            theme: "modern"
+        });
+    </script>
+
+}

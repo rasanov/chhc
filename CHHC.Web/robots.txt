@@ -1,0 +1,5 @@
+User-agent: *
+Sitemap: http://www.centralhomehealthcare.com/sitemap.xml
+Disallow: /Content/
+Disallow: /Scripts/
+Disallow: /img/

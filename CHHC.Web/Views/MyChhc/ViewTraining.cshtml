@@ -1,0 +1,122 @@
+﻿@using CHHC.Web.Helpers
+@using CHHC.Web.Models;
+@model PublicTraining
+@{
+    ViewBag.Title = string.Format("{0} ({1})", Model.Title, TrainingHelper.MinutesToTime(Model.DurationMinutes));
+}
+
+@section Head
+{
+    <link href="/Content/pirobox/css.css" rel="stylesheet"/>
+}
+
+<div class="container page page-title-background mychhc">    
+    <h2 class="page-title">@Html.Raw(CHHC.Web.ViewHelper.PrepareTitle(ViewBag.Title))</h2>
+    <div class="container page-content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    @Model.Title
+                    <div class="extra-info">
+                        Duration: @TrainingHelper.MinutesToTime(Model.DurationMinutes)<br/>
+                        Instructor: @Model.InstructorName
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-6 training-text">
+                        @(new HtmlString(Model.Text))
+                    </div>
+                    <div class="col-md-6">
+                        @for (int i = 0; i < Model.YoutubeMediaTitles.Count; i++)
+                        {
+                            <div class="training-video">
+                                @{
+                                    var url = @Model.YoutubeMediaUrls[i];
+                                    var title = string.IsNullOrWhiteSpace(@Model.YoutubeMediaTitles[i]) ? url : @Model.YoutubeMediaTitles[i];
+                                    title = title + " (open in popup)";
+                                    <iframe src="@url" frameborder="0" allowfullscreen></iframe>
+                                    <a href="@url" class="pirobox" data-pirobox="iframe-720-600">@title</a>
+                                }
+                            </div>
+                        }
+                        @for (int i = 0; i < Model.AudioMediaTitles.Count; i++)
+                        {
+                            <div class="training-audio">
+                                @Model.AudioMediaTitles[i]<br/>
+                                @{
+                                    var audioUrl = @Model.AudioMediaUrls[i];
+                                    var path = "../../audio/" + audioUrl;
+                                    <audio controls>
+                                        <source src="@path" type="audio/mpeg">
+                                        Your browser does not support the audio element.
+                                    </audio>
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        @if (Model.GoogleDriveMediaTitles.Count > 0)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.Label("Supplementary materials", new {@class = "control-label"})
+                            <br />
+                            @for (int i = 0; i < Model.GoogleDriveMediaTitles.Count; i++)
+                            {
+                                var title = string.IsNullOrWhiteSpace(@Model.GoogleDriveMediaTitles[i]) ? @Model.GoogleDriveMediaUrls[i] : @Model.GoogleDriveMediaTitles[i];
+                                <a href="@Model.GoogleDriveMediaUrls[i]" target="_blank">@title</a>
+                                <br />
+                            }
+                        </div>
+                </div>
+            </div>
+            <br/>
+        }
+        <div class="row">
+            <div class="col-md-12">
+                @if (Model.IsCompleted)
+                {
+                    <div class="form-group">
+                        @if (Model.CompletedDate.HasValue)
+                        {
+                            <text>Quiz completed at @Model.CompletedDate.Value.ToString("d")</text>
+                        }
+                        else
+                        {
+                            <text>Quiz completed</text>
+                        }
+                    </div>
+                    @Html.ActionLink("Open Completion Form", "OpenCompletionForm", new { TrainingId = Model.Id }, new { @class = "btn btn-primary" })
+                }
+                else
+                {
+                    <br />
+                    @Html.ActionLink("Take a Quiz", "TrainingQuiz", new { Id = Model.Id }, new { @class = "btn btn-primary" })
+                }
+                @Html.ActionLink("Back", "Trainings", "MyChhc", null, new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/pirobox")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.pirobox_ext({
+                piro_speed: 700,
+                zoom_mode: true,
+                move_mode: 'mousemove',
+                bg_alpha: 0.5,
+                piro_scroll: false,
+                share: true
+            });
+        });
+    </script>
+}

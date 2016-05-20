@@ -1,0 +1,19 @@
+﻿@using CHHC.Web.Models;
+@model ViewBlog
+
+@{
+    ViewBag.Title = "Central Home Health Care - Blog - " + Model.Title;
+    ViewBag.Description = Model.Title;
+    ViewBag.Keywords = "Home Health Care" + Model.Title;
+}
+
+<div class="container page page-title-background about">
+    <h2 class="page-title">@Model.Title</h2>
+    <div class="container page-content">
+        <div class="row columns">
+            <div class="col-sm-12">
+                <div>@(new HtmlString(Model.Text))</div>
+            </div>
+        </div>
+    </div>
+</div>

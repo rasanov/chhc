@@ -1,0 +1,25 @@
+﻿@using CHHC.Web.Models;
+@model List<ViewBlog>
+@{
+    ViewBag.Title = "Central Home Health Care - Blogs";
+    ViewBag.Description = "Read latest blogs from Central Home Health Care";
+    ViewBag.Keywords = "Home Health Care";
+}
+
+<div class="container page page-title-background job">
+    <h2 class="page-title">Blogs</h2>
+    <div class="container page-content">
+        <div class="row columns">
+            <div class="col-sm-12">
+                @foreach (ViewBlog viewBlog in Model)
+                {
+                    <h3>@Html.ActionLink(viewBlog.Title, "Blog", new { id = viewBlog.Id })</h3>
+                    <h6>@viewBlog.Date.ToString("MMMMM yyyy")</h6>
+                    <div>@(new HtmlString(viewBlog.Text))</div>
+                    <br />
+                    <br />
+                }
+            </div>
+        </div>
+    </div>
+</div>

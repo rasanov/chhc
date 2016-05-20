@@ -1,0 +1,74 @@
+﻿@model List<CHHC.Web.Models.UserProfile>
+@{
+    ViewBag.Title = "Users";
+}
+
+<div class="container page page-title-background mychhc">    
+    <h2 class="page-title">@Html.Raw(CHHC.Web.ViewHelper.PrepareTitle(ViewBag.Title))</h2>
+    <div class="container page-content">
+        <div class="row">
+            <div class="col-md-12">
+                @Html.Partial("_MessagePartial")
+                @Html.ActionLink("Create user", "CreateUser", null, new { @class = "btn btn-primary btn-top" })
+                <table id="users" class="table table-striped table-bordered table-condensed">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>User name</th>
+                        <th>Full name</th>
+                        <th>Title</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (CHHC.Web.Models.UserProfile user in Model)
+                {
+                    <tr>
+                        <td>@user.InnerChhcId</td>
+                        <td>@user.UserName</td>
+                        <td>@user.FullName</td>
+                        <td>@user.Title</td>
+                        <td>
+                            @Html.ActionLink(linkText: "roles", actionName: "UserRoles", routeValues: new { UserName = user.UserName })<br />
+                            @Html.ActionLink(linkText: "trainings", actionName: "UserTrainings", controllerName: "Admin", routeValues: new { Id = user.UserId, UserName = user.UserName, ReturnControllerName = ViewContext.RouteData.Values["controller"] }, htmlAttributes: null)<br />
+                            @Html.ActionLink(linkText: "patients", actionName: "UserPatients", controllerName: "Admin", routeValues: new { Id = user.UserId, UserName = user.UserName, ReturnControllerName = ViewContext.RouteData.Values["controller"] }, htmlAttributes: null)<br />
+                            @Html.ActionLink(linkText: "case conferences", actionName: "AllForEmployee", controllerName: "CaseConferences", routeValues: new { UserId = user.UserId, UserName = user.UserName }, htmlAttributes: null)<br />
+                        </td>
+                        <td>@Html.ActionLink(linkText: "edit", actionName: "EditUser", routeValues: new { UserName = user.UserName })</td>
+                        <td>@Html.ActionLink(linkText: "reset password", actionName: "ResetPassword", routeValues: new { UserName = user.UserName })</td>
+                        <td>
+                            @using (Html.BeginForm("DeleteUser", null, FormMethod.Post, new { id = "deleteForm" + user.UserId }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("userName", user.UserName)
+                                <a href="javascript:{}" onclick="if(confirm('Are you sure?')) { $(this).closest('form').submit();return false; } else { e.preventDefault();return false; }">delete</a>
+                            }
+                        </td>
+                    </tr>
+                }
+                </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#users').dataTable({
+                "columnDefs": [
+                    { "sorting": false, "targets": 4 },
+                    { "sorting": false, "targets": 5 },
+                    { "sorting": false, "targets": 6 },
+                    { "sorting": false, "targets": 7 }
+                ]
+            });
+        } );
+    </script>
+}

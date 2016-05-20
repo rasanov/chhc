@@ -1,0 +1,15 @@
+﻿@{
+    var controller = ViewContext.Controller;
+    if (controller is CHHC.Web.Controllers.HomeController)
+    {
+        Layout = "~/Views/Shared/MainLayout.cshtml";
+    }
+    else if (controller is CHHC.Web.Controllers.ErrorsController)
+    {
+        Layout = "~/Views/Shared/ErrorLayout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/AccountLayout.cshtml";
+    }
+}

@@ -1,0 +1,68 @@
+﻿@using System.Globalization
+@using CHHC.Web.Models;
+@model PublicQuiz
+@{
+    ViewBag.Title = "Training '" + @Model.TrainingTitle + "' > Quiz";
+}
+
+<div class="container page page-title-background mychhc">    
+    <h2 class="page-title">@Html.Raw(CHHC.Web.ViewHelper.PrepareTitle(ViewBag.Title))</h2>
+    @using (Html.BeginForm())
+    {
+        <div class="container page-content">
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.Partial("_MessagePartial")
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.TrainingId)
+                    @Html.HiddenFor(x => x.TrainingTitle)
+                    @foreach (var question in Model.Questions)
+                    {
+                        <div class="form-group question-box">
+                            @Html.Label(question.Id.ToString(CultureInfo.CurrentCulture), question.Question, new { @class = "control-label" })
+                            @if (question.AnsweredCorrectly.HasValue)
+                            {
+                                if (question.AnsweredCorrectly.Value)
+                                {
+                                    @Html.Label("AnsweredCorrectlyLabel", "correct", new { @class = "label label-success" })
+                                }
+                                else
+                                {
+                                    @Html.Label("AnsweredCorrectlyLabel", "incorrect", new { @class = "label label-danger" })
+                                }
+                            }
+                            @foreach (var answer in question.Answers)
+                            {
+                                string checkboxName = "Question" + @question.Id + "Answer" + @answer.Id + "IsCorrect";
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="@checkboxName" @(answer.IsChosenAsCorrect ? " checked='checked'" : string.Empty)>@Html.Label(answer.Id.ToString(CultureInfo.CurrentCulture), answer.Text, new { @class = "control-label" })
+                                    </label>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    @if (Model.IsPassed())
+                    {
+                        @Html.ActionLink("Open Completion Form", "OpenCompletionForm", new { TrainingId = Model.TrainingId }, new { @class = "btn btn-primary" })
+                        <button type="submit" class="btn btn-primary disabled">Answer</button>
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Open Completion Form", null, null, new { @class = "btn btn-primary disabled" })
+                        <button type="submit" class="btn btn-primary">Answer</button>
+                    }
+                    @Html.ActionLink("Back", "Trainings", null, new { @class = "btn btn-default" })
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+
+}

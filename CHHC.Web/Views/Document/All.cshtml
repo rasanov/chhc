@@ -1,0 +1,142 @@
+﻿@using CHHC.Web.Models
+@model ViewDocuments
+
+@{
+    ViewBag.Title = "Documents";
+}
+
+<div class="container page page-title-background mychhc">    
+    <h2 class="page-title">@Html.Raw(CHHC.Web.ViewHelper.PrepareTitle(ViewBag.Title))</h2>
+    <div class="container page-content">
+        <div class="row">
+            <div class="col-md-12">
+                @Html.Partial("_MessagePartial")
+                
+                <h3>Assigned documents</h3>
+                <div id="assignedDocuments">
+                @if (Model.DocumentsAssignedToCurrentUser == null || Model.DocumentsAssignedToCurrentUser.Count == 0)
+                {
+                    <p>There is no documents assigned.</p>
+                }
+                else
+                {
+                    <table class="table table-striped table-bordered table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Document Name</th>
+                                <th>Date</th>
+                                <th>Uploaded By</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (ViewDocument viewDocument in Model.DocumentsAssignedToCurrentUser)
+                            {
+                                <tr>
+                                    <td>@viewDocument.FileName</td>
+                                    <td>@viewDocument.DateUploaded.ToString("MM/dd/yyyy")</td>
+                                    <td>@viewDocument.UploadedByMembershipUserName</td>
+                                    <td>
+                                        <div class="pull-left" style="line-height:21px;padding-right:10px">
+                                            @using (Html.BeginForm("Download", "Document"))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                @Html.Hidden("Id", viewDocument.Id)
+                                                <button type="submit" class="btn btn-link" name="Command" value="Download" onclick="sendreq()">download</button>
+                                            }
+                                        </div>
+                                        @if (viewDocument.Status == ViewDocumentStatus.AssignedToAll)
+                                        {
+                                            <div class="pull-left" style="line-height:22px;padding-right:10px">
+                                                @using (Html.BeginForm("Delete", "Document"))
+                                                {
+                                                    @Html.AntiForgeryToken()
+                                                    @Html.Hidden("Id", viewDocument.Id)
+                                                    <a href="javascript:{}" onclick="if (confirm('Are you sure?')) { $(this).closest('form').submit();return false; } else { e.preventDefault();return false; }">delete</a>
+                                                }
+                                            </div>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                </div>
+                
+                <h3>Uploaded documents</h3>
+                @if (Model.DocumentsUploadedByCurrentUser == null || Model.DocumentsUploadedByCurrentUser.Count == 0)
+                {
+                    <p>There is no documents uploaded.</p>
+                }
+                else
+                {
+                    <table class="table table-striped table-bordered table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Document Name</th>
+                                <th>Date</th>
+                                <th>Uploaded By</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (ViewDocument viewDocument in Model.DocumentsUploadedByCurrentUser)
+                            {
+                                <tr>
+                                    <td>@viewDocument.FileName</td>
+                                    <td>@viewDocument.DateUploaded.ToString("MM/dd/yyyy")</td>
+                                    <td>@viewDocument.UploadedByMembershipUserName</td>
+                                    <td>
+                                        <div class="pull-left" style="line-height: 21px; padding-right: 10px">
+                                            @using (Html.BeginForm("Delete", "Document"))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                @Html.Hidden("Id", viewDocument.Id)
+                                                <a href="javascript:{}" onclick=" if (confirm('Are you sure?')) { $(this).closest('form').submit();return false; } else { e.preventDefault();return false; } ">delete</a>
+                                            }
+                                        </div>
+                                        @if (CHHC.Web.AccountHelper.CanViewAllDocuments(User))
+                                        {
+                                            @Html.ActionLink("assign", "Assign", "Document", new { Id = viewDocument.Id, documentFileName = viewDocument.FileName }, null)
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                <br />
+                @Html.ActionLink("New", "New", null, new { @class = "btn btn-primary" })
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        function sendreq(evt) {
+            var req = new XMLHttpRequest();
+            req.open('POST', 'Download', true);
+            req.onreadystatechange = function (aEvt) {
+                if (req.readyState == 4) {
+                    //4 = complete
+                    //$('#progressMsg').hide();
+                    var req2 = new XMLHttpRequest();
+                    req2.open('GET', 'AssignedDocuments', true);
+                    req2.onreadystatechange = function (aEvt) {
+                        if (req2.readyState == 4 && req2.status == 200) {
+                            //alert(req2.responseText);
+                            $("#assignedDocuments").html(req2.responseText);
+                        }
+                    };
+                    req2.send();
+                }
+            };
+            //$('#progressMsg').show();
+            req.send();
+        }
+    </script>
+}

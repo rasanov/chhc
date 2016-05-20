@@ -1,0 +1,206 @@
+﻿@{
+    ViewBag.Title = "Central Home Health Care - Home";
+    ViewBag.Description = "Central Home Health Care provides outstanding care for all people";
+    ViewBag.Keywords = "Home Health Care Medical Community Health Accreditation Program CHAP Nursing Health Aides Therapists";
+}
+
+@Styles.Render("~/Content/home")
+
+    <!-- Carousel
+    ================================================== -->
+    <div class="container">
+        <div id="myCarousel" class="carousel slide">
+             <div class="carousel-panel hidden-480-tmp">
+                 <div class="list-group">
+                  <a href="@Url.Action("Contact", "Home")" class="list-group-item">                      
+                    <h4 class="list-group-item-heading table" >
+                        <div><span class="glyphicon glyphicon-earphone"></span></div>
+                        <div>Contact Us for a Free Consultation <nobr>Phone: 617-559-0200</nobr></div>
+                    </h4>                     
+                  </a>
+                  <a href="@Url.Action("Contact", "Home")" class="list-group-item">
+                    <h4 class="list-group-item-heading" ><span class="glyphicon glyphicon-envelope"></span>Contact Us Now
+                        <span class="glyphicon glyphicon-chevron-right pull-right"></span><span class="glyphicon glyphicon-chevron-right pull-right"></span>
+                    </h4>                    
+                  </a>
+                  <a href="@Url.Action("Job", "Home")" class="list-group-item">
+                    <h4 class="list-group-item-heading"><span class="glyphicon glyphicon-user"></span>Apply for a Job
+                        <span class="glyphicon glyphicon-chevron-right pull-right"></span><span class="glyphicon glyphicon-chevron-right pull-right"></span>
+                    </h4>                    
+                  </a>
+                     <h4></h4>
+                </div>
+            </div>
+            
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+                <li data-target="#myCarousel" data-slide-to="3"></li>
+                <li data-target="#myCarousel" data-slide-to="4"></li>
+                <li data-target="#myCarousel" data-slide-to="5"></li>
+                <li data-target="#myCarousel" data-slide-to="6"></li>
+                <li data-target="#myCarousel" data-slide-to="7"></li>
+            </ol>
+            <div class="carousel-inner">                
+                <div class="item active">
+                    <img src="~/img/s_1.jpg" alt="CHHC">
+                    <div class="container">
+                        <div class="carousel-caption">                            
+                            <h1>Please Call for a Free Evaluation</h1>
+                        </div>
+                    </div>                    
+                </div>
+                <div class="item">
+                    <img src="~/img/s_2.jpg" alt="CHHC">
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <h1>Support for Caregivers and Family Members</h1>                            
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="~/img/s_3.jpg" alt="CHHC">
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <h1>High-Quality, Compassionate Care</h1>                            
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="~/img/s_5.jpg" alt="CHHC">
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <h1>Skilled Nursing Services</h1>
+                        </div>
+                    </div>                    
+                </div>
+                <div class="item">
+                    <img src="~/img/s_6.jpg" alt="CHHC">
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <h1>Occupational and Speech Therapy</h1>
+                        </div>
+                    </div>                    
+                </div>
+                <div class="item">
+                    <img src="~/img/s_7.jpg" alt="CHHC">
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <h1>Physcial Therapy</h1>
+                        </div>
+                    </div>                    
+                </div>
+                <div class="item">
+                    <img src="~/img/s_8.jpg" alt="CHHC">
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <h1>Home Health Aide Services</h1>
+                        </div>
+                    </div>                    
+                </div>
+
+            </div>
+            <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a><a class="right carousel-control" href="#myCarousel" data-slide="next"><span
+                class="glyphicon glyphicon-chevron-right"></span></a>
+        
+        </div>
+    </div>
+    <!-- /.carousel -->
+
+<div class="container page page-home" > 
+    <div class="container page-content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="container">
+                    <div class="row caption">
+                        <div class="col-sm-12"><h2>Our Services</h2></div>
+                    </div>
+                    <div class="row columns">
+                        <div class="col-sm-6">
+                            <img src="~/img/CHHC-who-we-are-330x130.jpg" alt="CHHC we offer" />
+                            <h4>We offer</h4>
+                            <p>Central Home Health Care offers a wide range of plans, each tailored to meet your unique needs. Central Home Health Care is proud to offer the following services:</p>
+                            <ul>
+                                <li>Skilled Nursing</li>
+                                <li>Physical Therapy</li>
+                                <li>Home Health Aid</li>
+                                <li>Occupational and Speech Therapy</li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6">
+                            <img src="~/img/CHHC-services-for-families-330x130.jpg" alt="CHHC services for families" />
+                            <h4>Services for families:</h4>
+                            <p>Central Home Health Care also supports families and friends with the following services:</p>
+                            <ul>
+                                <li>Care giving education</li>
+                                <li>Community support and resources</li>
+                                <li>Planning of care and evaluation of needs</li>
+                                <li>Ongoing assessment</li>
+                                <li>Equipment, medication, and medical service referral</li>
+                            </ul>
+                            <p>@Html.ActionLink("Learn more about our services ...", "Services")</p>
+                        </div>
+                    </div>
+
+                    <div class="row caption">
+                        <div class="col-sm-12"><h2>Company Profile</h2></div>
+                    </div>
+                    <div class="row columns">
+                        <div class="col-sm-6">
+                            <img src="~/img/CHHC-compassionate-care-330x130.jpg" alt="CHHC who we are" />
+                            <h4>Who we are</h4>
+                            <p>Central Home Health Care provides outstanding care for all people, regardless of age or medical condition. Our experienced caregivers provide a wealth of services and are extremely friendly and compassionate.</p>
+                            <p>@Html.ActionLink("Learn more about us ...", "About")</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <img src="~/img/content/Community-health-accreditation-program.jpg" alt="Community health accreditation program" class="noborder" />
+                            <h4>Accredited by CHAP</h4>
+                            <p>Central Home Health Care is accredited by <a href="http://www.chapinc.org/">Community Health Accreditation Program (CHAP)</a>. Moreover, CHHC is fully licensed, bonded, and insured. Compassion, dignity, respect are three aspects we value most and thus these three words compose our slogan <i>"Compassion. Dignity. Respect."</i>.</p>
+                        </div>
+                    </div>
+
+                    <div class="row caption">
+                        <div class="col-sm-12"><h2>Jobs</h2></div>
+                    </div>
+                    <div class="row columns">
+                        <div class="col-sm-6">
+                            <img src="~/img/CHHC-positions-330x130.jpg" alt="CHHC positions" />
+                            <h4>Positions</h4>
+                            <p>We are currently hiring for next positions:</p>
+                            <ul>
+                                <li>Visiting Nurses</li>
+                                <li>Physical Therapists</li>
+                                <li>Home Health Aides</li>
+                                <li>Occupational Therapists</li>
+                                <li>Speech Therapists</li>
+                            </ul>
+                            <p>@Html.ActionLink("Learn more about jobs ...", "Job")</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <img src="~/img/CHHC-apply-now-330x130.jpg" alt="CHHC apply now" />
+                            <h4>Apply now</h4>
+                            <p>Dial 617-559-0200 and receive free employment consultation or fill "@Html.ActionLink("Job application", "Job")" form if you are interested.</p>
+                            <p>Central Home Health Care is an Equal Opportunity Employer which provides employment to all those who qualify regardless of race, color, creed, religion, sex, nationality, age, marital or handicap status.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script>
+        $(function () {
+           $('.carousel').carousel({
+                interval: 4000
+            });
+        });
+    </script>
+}

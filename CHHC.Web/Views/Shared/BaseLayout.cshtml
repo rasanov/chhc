@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="@ViewBag.Description">
+    <meta name="keywords" content="@ViewBag.Keywords">
+    <meta name="author" content="">
+    <!-- <link rel="shortcut icon" href="../../assets/ico/favicon.png"> -->
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/bootstrap")
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="/Scripts/html5shiv.js"></script>
+      <script src="/Scripts/respond.min.js"></script>
+    <![endif]-->
+    <!-- Custom styles for this template -->
+    <!-- link href="/Content/carousel.css" rel="stylesheet" -->
+
+        
+    @Styles.Render("~/Content/css")
+    
+    @RenderSection("Head", false)
+</head>
+<body class="gradient-bckg">
+    
+    <div class="navbar-wrapper">
+        <div class="container">
+            <div class="navbar navbar-default navbar-static-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="~/">
+                            <img class="logo" src="~/img/CHHC_100-175.png" alt="Central Home Health Care - Home" />
+                        </a><a class="navbar-brand navbar-brand-name hidden-480" href="~/">
+                            <h2>Central Home Health Care</h2>
+                        </a>
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar">
+                            </span>
+                        </button>
+                    </div>
+                    @RenderSection("HeaderMenu", true)
+                </div>
+            </div>
+        </div>
+    </div>
+    @RenderBody()
+    <footer>
+        <div class="container footer-container">
+            <div class="row">
+                <div class="col-sm-5 footer-column">
+                    <p>© 2010 - @DateTime.Now.Year www.centralhomehealthcare.com</p>
+                    <div class="social">
+				        <a class="facebook" title="CHHC on Facebook" href="http://www.facebook.com/pages/Central-Home-Health-Care/264806796916141" target="_blank"></a>
+                        <a class="twitter" title="CHHC on Twitter" href="http://twitter.com/CHHCMA" target="_blank"></a>
+                        <a class="googleplus" title="CHHC on Google+" href="http://plus.google.com/u/0/112487732059915820446/posts" target="_blank"></a>
+                        <a class="linkedin" title="CHHC on LinkedIn" href="http://www.linkedin.com/pub/chhc-inc/63/9a7/1a9" target="_blank"></a>
+                        <!--<a class="youtube" title="CHHC on Youtube" href="http://www.youtube.com" target="_blank"></a>-->
+				    </div>
+                </div>
+                <div class="col-sm-3 footer-column">
+                    @RenderSection("FooterMenu", true)
+                </div>
+                <div class="col-sm-4 footer-column">
+                    <p>90 Oak Street, Suite 405,<br />Newton, MA 02464<br />Phone: 617-559-0200<br />Fax: 617-663-6319<br />E-mail: info@centralhomehealthcare.com</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("Scripts", false)
+</body>
+</html>

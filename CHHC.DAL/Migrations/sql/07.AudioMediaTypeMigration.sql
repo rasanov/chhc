@@ -1,0 +1,1 @@
+﻿INSERT INTO [dbo].[MediaTypes] ([Key], [DisplayName]) VALUES ('audio', 'Audio')

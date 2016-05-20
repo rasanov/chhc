@@ -1,0 +1,271 @@
+﻿@model CHHC.Web.Models.CreateTraining
+@{
+    ViewBag.Title = "Create training";
+}
+
+<div class="container page page-title-background mychhc">    
+    <h2 class="page-title">@Html.Raw(CHHC.Web.ViewHelper.PrepareTitle(ViewBag.Title))</h2>
+    <div class="container page-content">
+        <div class="row">
+            <div class="col-md-10">
+                @Html.Partial("_MessagePartial")
+                @using (Html.BeginForm("CreateTraining", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary()
+				    <div class="form-group">
+                        @Html.LabelFor(m => m.Title, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.Title, new { @class = "form-control", @placeholder = "Subject" })
+				    </div>
+				    <div class="form-group">
+                        @Html.LabelFor(m => m.DurationMinutes, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.DurationMinutes, new { @class = "form-control", @placeholder = "Duration (minutes)" })
+				    </div>
+				    <div class="form-group">
+                        @Html.LabelFor(m => m.InstructorName, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.InstructorName, new { @class = "form-control", @placeholder = "Instructor" })
+				    </div>
+				    <div class="form-group">
+                        @Html.LabelFor(m => m.InstructorTitle, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.InstructorTitle, new { @class = "form-control", @placeholder = "Instructor Title" })
+				    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Text, new { @class = "control-label" })
+                        @Html.TextAreaFor(m => m.Text, 5, 30, new { @class = "form-control", @placeholder = "Text", @id = "TrainingText" })
+                    </div>
+                    
+                    <br />
+				    <div class="form-group">
+                        @Html.Label("Video", new { @class = "control-label" })
+                    </div>
+				    <div class="row form-group form-group-narrow">
+                        <div class="col-md-5">
+                            @Html.Label("Title", new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-7">
+                            @Html.Label("Url", new { @class = "control-label" })
+                        </div>
+                    </div>
+                    int count = 0;
+                    int maxCount = 1;
+                    if (Model != null)
+                    {
+                        count = Model.YoutubeMediaTitles.Count;
+                        for (int i = 0; i < count; i++)
+                        {
+                            int number = i + 1;
+                            string titleInputName = "YoutubeMediaTitles" + i;
+                            string urlInputName = "YoutubeMediaUrls" + i;
+                            <div class="row form-group">
+                                <div class="col-md-5">
+                                    @Html.TextBox(titleInputName, Model.YoutubeMediaTitles[i], new { @type = "form-control", @class = "form-control", @placeholder = "Title #" + @number })
+                                </div>
+                                <div class="col-md-7">
+                                    @Html.TextBox(urlInputName, Model.YoutubeMediaUrls[i], new { @type = "form-control", @class = "form-control", @placeholder = "Url #" + @number })
+                                </div>
+                            </div>
+                        }
+                    }
+                    for (int i = count; i < maxCount; i++)
+                    {
+                        int number = i + 1;
+                        string titleInputName = "YoutubeMediaTitles" + i;
+                        string urlInputName = "YoutubeMediaUrls" + i;
+				        <div class="row form-group">
+                            <div class="col-md-5">
+                                @Html.TextBox(titleInputName, string.Empty, new { @type = "form-control", @class = "form-control", @placeholder = "Title #" + @number })
+				            </div>
+                            <div class="col-md-7">
+                                @Html.TextBox(urlInputName, string.Empty, new { @type = "form-control", @class = "form-control", @placeholder = "Url #" + @number })
+                            </div>
+                        </div>
+                    }
+                    <br />
+                    
+				    <div class="form-group">
+                        @Html.Label("Audio", new { @class = "control-label" })
+                    </div>
+				    <div class="row form-group form-group-narrow">
+                        <div class="col-md-5">
+                            @Html.Label("Title", new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-7">
+                            @Html.Label("File (maximum 20 Mb)", new { @class = "control-label" })
+                        </div>
+                    </div>
+                    count = 0;
+                    maxCount = 1;
+                    if (Model != null)
+                    {
+                        count = Model.AudioMediaTitles.Count;
+                        for (int i = 0; i < count; i++)
+                        {
+                            string titleInputName = "AudioMediaTitles" + i;
+                            string fileInputName = "AudioMedia" + i;
+                            string audioMediaUrl = string.Empty;
+                            bool titleInputReadonly = false;
+                            if (Model.AudioMediaUrls.Count > i)
+                            {
+                                audioMediaUrl = Model.AudioMediaUrls[i];
+                                titleInputReadonly = true;
+                            }
+                            <div class="row form-group">
+                                <div class="col-md-5">
+                                    @if (titleInputReadonly)
+                                    {
+                                        @Html.TextBox(titleInputName, Model.AudioMediaTitles[i], new {@type = "form-control", @class = "form-control", @placeholder = "Title", @readonly = ""})
+                                    }
+                                    else
+                                    {
+                                        @Html.TextBox(titleInputName, Model.AudioMediaTitles[i], new {@type = "form-control", @class = "form-control", @placeholder = "Title"})
+                                    }
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <span class="btn btn-primary btn-file">
+                                                Browse… <input type="file" name="@fileInputName" accept=".mp3">
+                                            </span>
+                                        </span>
+                                        @Html.TextBox("AudioMediaFileName" + i, audioMediaUrl, new { @class = "form-control", @readonly = "" })
+                                        <span class="input-group-btn">
+                                            <a href="javascript:{}" onclick="return deleteAudioMedia(this,'@titleInputName')" class="btn btn-danger">Delete</a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    for (int i = count; i < maxCount; i++)
+                    {
+                        string titleInputName = "AudioMediaTitles" + i;
+                        string fileInputName = "AudioMedia" + i;
+                        <div class="row form-group">
+                            <div class="col-md-5">
+                                @Html.TextBox(titleInputName, string.Empty, new { @type = "form-control", @class = "form-control", @placeholder = "Title" })
+                            </div>
+                            <div class="col-md-7">
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <span class="btn btn-primary btn-file">
+                                            Browse… <input type="file" name="@fileInputName" accept=".mp3">
+                                        </span>
+                                    </span>
+                                    @Html.TextBox("AudioMediaFileName" + i, "", new { @class = "form-control", @readonly = "" })
+                                    <span class="input-group-btn">
+                                        <a href="javascript:{}" onclick="return deleteAudioMedia(this,'@titleInputName')" class="btn btn-danger">Delete</a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <br />
+                    
+				    <div class="form-group">
+                        @Html.Label("Documents", new { @class = "control-label" })
+                    </div>
+				    <div class="row form-group">
+                        <div class="col-md-1">
+                            @Html.Label("#", new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.Label("Title", new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-7">
+                            @Html.Label("Url", new { @class = "control-label" })
+                        </div>
+                    </div>
+                    count = 0;
+                    maxCount = 5;
+                    if (Model != null)
+                    {
+                        count = Model.GoogleDriveMediaTitles.Count;
+                        for (int i = 0; i < count; i++)
+                        {
+                            int number = i + 1;
+                            string titleInputName = "GoogleDriveMediaTitles" + i;
+                            string urlInputName = "GoogleDriveMediaUrls" + i;
+                            <div class="row form-group">
+                                <div class="col-md-1">
+                                    @Html.Label(number.ToString(), new { @class = "control-label" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBox(titleInputName, Model.GoogleDriveMediaTitles[i], new { @type = "form-control", @class = "form-control", @placeholder = "Title #" + @number })
+                                </div>
+                                <div class="col-md-7">
+                                    @Html.TextBox(urlInputName, Model.GoogleDriveMediaUrls[i], new { @type = "form-control", @class = "form-control", @placeholder = "Url #" + @number })
+                                </div>
+                            </div>
+                        }
+                    }
+                    for (int i = count; i < maxCount; i++)
+                    {
+                        int number = i + 1;
+                        string titleInputName = "GoogleDriveMediaTitles" + i;
+                        string urlInputName = "GoogleDriveMediaUrls" + i;
+				        <div class="row form-group">
+                            <div class="col-md-1">
+                                @Html.Label(number.ToString(), new { @class = "control-label" })
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBox(titleInputName, string.Empty, new { @type = "form-control", @class = "form-control", @placeholder = "Title #" + @number })
+				            </div>
+                            <div class="col-md-7">
+                                @Html.TextBox(urlInputName, string.Empty, new { @type = "form-control", @class = "form-control", @placeholder = "Url #" + @number })
+                            </div>
+                        </div>
+                    }
+                    <br />
+                    <button type="submit" class="btn btn-primary">Create</button>
+                    @Html.ActionLink("Back", "Trainings", null, new { @class = "btn btn-default" })
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="/Scripts/tinymce/tinymce.min.js"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea#TrainingText',
+            theme: "modern"
+        });
+    </script>
+    
+	<script>
+	    $(document)
+			.on('change', '.btn-file :file', function () {
+			    var input = $(this),
+				numFiles = input.get(0).files ? input.get(0).files.length : 1,
+				label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+			    input.trigger('fileselect', [numFiles, label]);
+			});
+
+	    $(document).ready(function () {
+	        $('.btn-file :file').on('fileselect', function (event, numFiles, label) {
+
+	            var input = $(this).parents('.input-group').find(':text'),
+					log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+	            if (input.length) {
+	                input.val(log);
+	            } else {
+	                if (log) alert(log);
+	            }
+
+	        });
+	    });
+
+	    function deleteAudioMedia(o, t) {
+	        $(o).parents('.input-group').find(':text').val("");
+	        $(o).parents('.input-group').find(':hidden').val("false");
+	        $(o).parents('.input-group').find(':file').val("");
+	        var titleInput = $('[name="' + t + '"]');
+	        titleInput.removeAttr('readonly');
+	        titleInput.val("");
+	    }
+	</script>
+}

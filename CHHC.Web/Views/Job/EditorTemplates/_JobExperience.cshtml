@@ -1,0 +1,74 @@
+﻿@using CHHC.Web.Models.JobModels
+@model ViewJobApplicationWork
+
+@Html.HiddenFor(x => x.Id)
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.LabelFor(x => x.JobTitle, new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.JobTitle, new { @class = "form-control", @readonly = "" })
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group datepicket-holder">
+            @Html.LabelFor(x => x.From, new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.From, "{0:MMM yyyy}", new { @class = "form-control", @readonly = "" })
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group datepicket-holder">
+            @Html.LabelFor(x => x.To, new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.To, "{0:MMM yyyy}", new { @class = "form-control", @readonly = "" })
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            @Html.LabelFor(x => x.Responsibilities, new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.Responsibilities, new { @class = "form-control", @readonly = "" })
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            @Html.LabelFor(x => x.Address, new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.Address, new { @class = "form-control", @readonly = "" })
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            @Html.LabelFor(x => x.EmployerName, new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.EmployerName, new { @class = "form-control", @readonly = "" })
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            @Html.LabelFor(x => x.Phone, new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.Phone, new { @class = "form-control", @readonly = "" })
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            @Html.LabelFor(x => x.SupervisorName, new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.SupervisorName, new { @class = "form-control", @readonly = "" })
+        </div>
+    </div>
+</div>
+<div class="row" style="padding-bottom:40px">
+    <div class="col-md-3">
+        <div class="form-group">
+            @Html.LabelFor(x => x.Salary, new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.Salary, new { @class = "form-control", @readonly = "" })
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="form-group">
+            @Html.LabelFor(x => x.ReasonForLeaving, new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.ReasonForLeaving, new { @class = "form-control", @readonly = "" })
+        </div>
+    </div>
+</div>

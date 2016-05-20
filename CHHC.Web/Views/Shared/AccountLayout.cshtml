@@ -1,0 +1,84 @@
+﻿@using CHHC.Web
+@using CHHC.Web.Models
+@{
+    Layout = "~/Views/Shared/BaseLayout.cshtml";
+}
+
+@section Head
+{
+    @RenderSection("Head", false)
+}
+
+@section HeaderMenu
+{
+    @{
+        bool isSignInForm = ViewContext.RouteData.Values["controller"].ToString().ToLower() == "account" && ViewContext.RouteData.Values["action"].ToString().ToLower() == "signin";
+
+        if (User.Identity.IsAuthenticated && !isSignInForm)
+        {
+            Html.RenderAction("HeaderMenu", "Account", new { ActiveMenuItem = (ViewBag.ActiveManuItem ?? AccountMenuItems.None) });
+        }
+    }
+}
+
+@RenderBody()
+
+@section FooterMenu
+{
+    @{
+        bool isLoginForm = ViewContext.RouteData.Values["controller"].ToString().ToLower() == "account" && ViewContext.RouteData.Values["action"].ToString().ToLower() == "signin";
+
+        if (User.Identity.IsAuthenticated && !isLoginForm)
+        {
+            string controllerName;
+            AccountHelper.GetDefaultController(User.Identity.Name, out controllerName);
+            
+            <ul>
+                <li><a href="#">Back to top</a></li>
+                @if (User.Identity.IsAuthenticated && !isLoginForm)
+                {
+                    if (User.CanAccessUsers())
+                    {
+                        <li>@Html.ActionLink("Users", "Users", controllerName, null, null)</li>
+                    }
+                    if (User.CanAccessPatients())
+                    {
+                        <li>@Html.ActionLink("Patients", "All", "Patients", null, null)</li>
+                    }
+                    if (User.CanAccessTrainings())
+                    {
+                        <li>@Html.ActionLink("Trainings", "Trainings", controllerName, null, null)</li>
+                    }
+                    if (User.CanManageCaseConferences())
+                    {
+                         <li>@Html.ActionLink("Case conferences", "Compose", "CaseConferences", null, null)</li>
+                    }
+                    else if (User.CanViewNotEditCaseConference())
+                    {
+                         <li>@Html.ActionLink("Case conferences", "All", "CaseConferences", null, null)</li>
+                    }
+                    if (User.CanAccessRoles())
+                    {
+                        <li>@Html.ActionLink("Roles", "ViewRoles", controllerName, null, null)</li>
+                    }
+                    <li>@Html.ActionLink("Change password", "ChangePassword", "Account", null, null)</li>
+                    <li>@Html.ActionLink("Documents", "All", "Document", null, null)</li>
+                    if (User.CanEditBlogs())
+                    {
+                        <li>@Html.ActionLink("Blogs", "All", "Blog", null, null)</li>
+                    }
+                    if (User.CanViewJobs())
+                    {
+                        <li>@Html.ActionLink("Jobs", "Index", "Job", null, null)</li>
+                    }
+                    <li>@Html.ActionLink("Help", "Help", controllerName, null, null)</li>
+                }
+            </ul>
+        }
+    }
+}
+
+@section Scripts
+{
+    @RenderSection("Scripts", false)
+}

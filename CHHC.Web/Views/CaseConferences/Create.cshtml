@@ -1,0 +1,124 @@
+﻿@using System.Globalization
+@using CHHC.DomainModel
+@using CHHC.Web.Models;
+@model CreateCaseConference
+@{
+    ViewBag.Title = "Case Conference > Create";
+}
+@section Head
+{
+    @Styles.Render("~/Content/themes/base/css")
+}
+
+<div class="container page page-title-background mychhc">    
+    <h2 class="page-title">@Html.Raw(CHHC.Web.ViewHelper.PrepareTitle(ViewBag.Title))</h2>
+    @using (Html.BeginForm())
+    {
+        <div class="container page-content">
+            <div class="row">
+                <div class="col-md-11">
+                    @Html.Partial("_MessagePartial")
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("Date", Model.Date)
+                    @Html.Hidden("TemplateCaseConferenceId", Model.TemplateCaseConferenceId)
+                    @Html.Hidden("PatientId", Model.PatientId)
+                    @Html.Hidden("PatientName", Model.PatientName)
+                    @Html.Hidden("QuestionIds", string.Join(",", Model.Questions.Select(x => x.Id)))
+
+                    <br />
+                    <div class="form-group">
+                        @Html.Label("DateLabel", "Date:", new { @class = "control-label" })&nbsp;@Model.Date.ToShortDateString()
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("PatientNameLabel", "Patient:", new { @class = "control-label" })&nbsp;@Model.PatientName
+                    </div>
+                    <br />
+                    <div class="form-group col-md-12">
+                        <div class="row">
+                            <div class="form-group datepicket-holder col-md-3">
+                                @Html.LabelFor(x => x.CertificationDate, new { @class = "control-label" })
+                                @Html.TextBoxFor(x => x.CertificationDate, new { @class = "form-control datepicker", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                    @foreach (var question in Model.Questions)
+                    {
+                        @Html.Hidden("QuestionType" + question.Id, question.Type.ToString())
+                        if (question.Type == TemplateCaseConferenceQuestionType.Text)
+                        {
+                            var textQuestion = question.TextQuestion;
+                            <div class="form-group question-box">
+                                @Html.Label(question.Id.ToString(CultureInfo.CurrentCulture), textQuestion.Text, new { @class = "control-label" })
+                                @Html.TextBox("QuestionAnswer" + question.Id, textQuestion.Answer, new { @class = "form-control" })
+                            </div>
+                        }
+                        else if (question.Type == TemplateCaseConferenceQuestionType.Date)
+                        {
+                            var dateQuestion = question.DateQuestion;
+                            <div class="form-group col-md-12 question-box">
+                                <div class="row">
+                                    <div class="form-group datepicket-holder col-md-3">
+                                        @Html.Label(question.Id.ToString(CultureInfo.CurrentCulture), dateQuestion.Text, new { @class = "control-label" })
+                                        @Html.TextBox("QuestionAnswer" + question.Id, dateQuestion.Answer, new { @class = "form-control datepicker", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else if (question.Type == TemplateCaseConferenceQuestionType.Multichoice)
+                        {
+                            var multichoiceQuestion = question.MultichoiceQuestion;
+                            <div class="form-group question-box">
+                                @Html.Label(question.Id.ToString(CultureInfo.CurrentCulture), multichoiceQuestion.Text, new { @class = "control-label" })
+                                @foreach (var answer in multichoiceQuestion.Answers)
+                                {
+                                    string checkboxName = "Question" + @question.Id + "Answer" + @answer.Id + "IsCorrect";
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="@checkboxName" @(answer.IsChosen ? " checked='checked'" : string.Empty)>@Html.Label(answer.Id.ToString(CultureInfo.CurrentCulture), answer.Text, new { @class = "control-label" })
+                                        </label>
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else if (question.Type == TemplateCaseConferenceQuestionType.MultichoiceText)
+                        {
+                            var multichoiceTextQuestion = question.MultichoiceTextQuestion;
+                            <div class="form-group question-box">
+                                @Html.Label(question.Id.ToString(CultureInfo.CurrentCulture), multichoiceTextQuestion.Text, new { @class = "control-label" })
+                                @foreach (var answer in multichoiceTextQuestion.Answers)
+                                {
+                                    string checkboxName = "Question" + @question.Id + "Answer" + @answer.Id + "IsCorrect";
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="@checkboxName" @(answer.IsChosen ? " checked='checked'" : string.Empty)>@Html.Label(answer.Id.ToString(CultureInfo.CurrentCulture), answer.Text, new { @class = "control-label" })
+                                        </label>
+                                    </div>
+                                }
+                                @Html.TextBox("QuestionAnswer" + question.Id, multichoiceTextQuestion.TextAnswer, new { @class = "form-control" })
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary" name="Command" value="Save">Save</button>
+                    @Html.ActionLink("Back", "AllFilter", new ViewPatientCaseConferences { PatientId = Model.PatientId, PatientName = Model.PatientName, UserId = Model.UserId }, new { @class = "btn btn-default" })
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryui")
+    <script>
+        $(function () {
+            $('.datepicker').datepicker({
+                showOn: "both",
+                buttonImage: "/img/content/calendar-icon-small.png",
+                buttonImageOnly: true
+            });
+        });
+    </script>
+}

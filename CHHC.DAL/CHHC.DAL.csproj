@@ -1,0 +1,209 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CD23EB68-1D64-4927-AF48-6B846B399591}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CHHC.DAL</RootNamespace>
+    <AssemblyName>CHHC.DAL</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Infrastructure\DomainContext.cs" />
+    <Compile Include="Migrations\201402061833026_InitMigration.cs" />
+    <Compile Include="Migrations\201402061833026_InitMigration.Designer.cs">
+      <DependentUpon>201402061833026_InitMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201402080417389_MediaTitleMigration.cs" />
+    <Compile Include="Migrations\201402080417389_MediaTitleMigration.Designer.cs">
+      <DependentUpon>201402080417389_MediaTitleMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201402241642529_MediaTypeMigration.cs" />
+    <Compile Include="Migrations\201402241642529_MediaTypeMigration.Designer.cs">
+      <DependentUpon>201402241642529_MediaTypeMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201403111451298_TrainingDurationMigration.cs" />
+    <Compile Include="Migrations\201403111451298_TrainingDurationMigration.Designer.cs">
+      <DependentUpon>201403111451298_TrainingDurationMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201403141714119_TrainingInstructorName.cs" />
+    <Compile Include="Migrations\201403141714119_TrainingInstructorName.Designer.cs">
+      <DependentUpon>201403141714119_TrainingInstructorName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201403141716517_UserSettingsTrainingDate.cs" />
+    <Compile Include="Migrations\201403141716517_UserSettingsTrainingDate.Designer.cs">
+      <DependentUpon>201403141716517_UserSettingsTrainingDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201404170048458_InstructorTitle.cs" />
+    <Compile Include="Migrations\201404170048458_InstructorTitle.Designer.cs">
+      <DependentUpon>201404170048458_InstructorTitle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201404171844435_AfterUserProfileTitle.cs" />
+    <Compile Include="Migrations\201404171844435_AfterUserProfileTitle.Designer.cs">
+      <DependentUpon>201404171844435_AfterUserProfileTitle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201407050034410_AfterUserProfileInnerChhcId.cs" />
+    <Compile Include="Migrations\201407050034410_AfterUserProfileInnerChhcId.Designer.cs">
+      <DependentUpon>201407050034410_AfterUserProfileInnerChhcId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201408011655357_CaseConference.cs" />
+    <Compile Include="Migrations\201408011655357_CaseConference.Designer.cs">
+      <DependentUpon>201408011655357_CaseConference.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201408072002009_CaseConferenceCertificationDate.cs" />
+    <Compile Include="Migrations\201408072002009_CaseConferenceCertificationDate.Designer.cs">
+      <DependentUpon>201408072002009_CaseConferenceCertificationDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201408251953314_CaseConferenceStatus.cs" />
+    <Compile Include="Migrations\201408251953314_CaseConferenceStatus.Designer.cs">
+      <DependentUpon>201408251953314_CaseConferenceStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201409080010502_CaseConferenceCascadeDelete.cs" />
+    <Compile Include="Migrations\201409080010502_CaseConferenceCascadeDelete.Designer.cs">
+      <DependentUpon>201409080010502_CaseConferenceCascadeDelete.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201409161918150_DocumentExchange.cs" />
+    <Compile Include="Migrations\201409161918150_DocumentExchange.Designer.cs">
+      <DependentUpon>201409161918150_DocumentExchange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201604292332543_Blog.cs" />
+    <Compile Include="Migrations\201604292332543_Blog.Designer.cs">
+      <DependentUpon>201604292332543_Blog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605151920512_JobApplication.cs" />
+    <Compile Include="Migrations\201605151920512_JobApplication.Designer.cs">
+      <DependentUpon>201605151920512_JobApplication.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CHHC.DomainModel\CHHC.DomainModel.csproj">
+      <Project>{59a0de3b-10f7-4af8-be1d-094e87c9effd}</Project>
+      <Name>CHHC.DomainModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201402061833026_InitMigration.resx">
+      <DependentUpon>201402061833026_InitMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201402080417389_MediaTitleMigration.resx">
+      <DependentUpon>201402080417389_MediaTitleMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201402241642529_MediaTypeMigration.resx">
+      <DependentUpon>201402241642529_MediaTypeMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201403111451298_TrainingDurationMigration.resx">
+      <DependentUpon>201403111451298_TrainingDurationMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201403141714119_TrainingInstructorName.resx">
+      <DependentUpon>201403141714119_TrainingInstructorName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201403141716517_UserSettingsTrainingDate.resx">
+      <DependentUpon>201403141716517_UserSettingsTrainingDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404170048458_InstructorTitle.resx">
+      <DependentUpon>201404170048458_InstructorTitle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404171844435_AfterUserProfileTitle.resx">
+      <DependentUpon>201404171844435_AfterUserProfileTitle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201407050034410_AfterUserProfileInnerChhcId.resx">
+      <DependentUpon>201407050034410_AfterUserProfileInnerChhcId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201408011655357_CaseConference.resx">
+      <DependentUpon>201408011655357_CaseConference.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201408072002009_CaseConferenceCertificationDate.resx">
+      <DependentUpon>201408072002009_CaseConferenceCertificationDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201408251953314_CaseConferenceStatus.resx">
+      <DependentUpon>201408251953314_CaseConferenceStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201409080010502_CaseConferenceCascadeDelete.resx">
+      <DependentUpon>201409080010502_CaseConferenceCascadeDelete.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201409161918150_DocumentExchange.resx">
+      <DependentUpon>201409161918150_DocumentExchange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604292332543_Blog.resx">
+      <DependentUpon>201604292332543_Blog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605151920512_JobApplication.resx">
+      <DependentUpon>201605151920512_JobApplication.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Migrations\Commands.txt" />
+    <Content Include="Migrations\sql\01.InitMigration.sql" />
+    <Content Include="Migrations\sql\02.MediaTitleMigration.sql" />
+    <Content Include="Migrations\sql\03.MediaTypeMigration.sql" />
+    <Content Include="Migrations\sql\04.TrainingDurationMigration.sql" />
+    <Content Include="Migrations\sql\05.TrainingInstructorName.sql" />
+    <Content Include="Migrations\sql\06.UserSettingsTrainingDate.sql" />
+    <Content Include="Migrations\sql\07.AudioMediaTypeMigration.sql" />
+    <Content Include="Migrations\sql\08.InstructorTitle.sql" />
+    <Content Include="Migrations\sql\103.AfterUserProfileInnerChhcId.sql" />
+    <Content Include="Migrations\sql\201.CaseConfernce.sql" />
+    <Content Include="Migrations\sql\202.InsertPatientsAsOf20140707.sql" />
+    <Content Include="Migrations\sql\203.InsertPatientRoles.sql" />
+    <Content Include="Migrations\sql\204.InsertDefaultTemplateCaseConference.sql" />
+    <Content Include="Migrations\sql\11.AfterUserProfileTitle.sql" />
+    <Content Include="Migrations\sql\205.InsertCaseConferenceRoles.sql" />
+    <Content Include="Migrations\sql\206.CaseConferenceCertificationDate.sql" />
+    <Content Include="Migrations\sql\301.CaseConferenceStatus.sql" />
+    <Content Include="Migrations\sql\302.CaseConferenceCascadeDelete.sql" />
+    <Content Include="Migrations\sql\401.InsertDocumentExchangeRoles.sql" />
+    <Content Include="Migrations\sql\402.DocumentExchange.sql" />
+    <Content Include="Migrations\sql\403.InsertDefaultUserRoles.sql" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

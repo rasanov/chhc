@@ -1,0 +1,37 @@
+﻿@model IEnumerable<string>
+@{
+    ViewBag.Title = "Roles";
+}
+
+<div class="container page page-title-background mychhc">    
+    <h2 class="page-title">@Html.Raw(CHHC.Web.ViewHelper.PrepareTitle(ViewBag.Title))</h2>
+    <div class="container page-content">
+        <div class="row">
+            <div class="col-md-12">
+                @Html.Partial("_MessagePartial")
+                <br />
+                <table class="table table-striped table-bordered table-condensed">
+                <thead>
+                    <tr>
+                        <th>Role</th>
+                        <th>Users</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (string role in Model)
+                {
+                    <tr>
+                        <td>@CHHC.Web.ViewHelper.GetRoleFriendlyName(role)</td>
+                        <td>@Html.ActionLink("users", "RoleUsers", new { Role = role })</td>
+                    </tr>
+                }
+                </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

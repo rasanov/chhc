@@ -1,0 +1,3 @@
+Update-Database -Script -SourceMigration: [MigrationName] -TargetMigration: [MigrationName]
+
+Add-Migration [MigrationName] –IgnoreChanges

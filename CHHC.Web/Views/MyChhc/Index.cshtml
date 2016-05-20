@@ -1,0 +1,55 @@
+﻿@using CHHC.Web
+@using CHHC.Web.Models;
+@model MyChhcDashboard
+@{
+    ViewBag.Title = "Welcome";
+}
+
+<div class="container page page-title-background mychhc">    
+    <h2 class="page-title">@Html.Raw(ViewHelper.PrepareTitle(ViewBag.Title))</h2>
+    <div class="container page-content">
+        <div class="row">
+            <br/>
+            @if (User.CanViewNotEditTraining())
+            {
+                <div class="col-md-12 form-group">
+                    @if (Model.NotCompletedTrainingsCount > 0)
+                    {
+                        <text>You have @Model.NotCompletedTrainingsCount not completed @Html.ActionLink("trainings", "Trainings").</text>
+                    }
+                    else
+                    {
+                        <text>You don't have any not completed trainings.</text>
+                    }
+                </div>
+            }
+            @if (User.CanViewNotEditCaseConference())
+            {
+                <div class="col-md-12 form-group">
+                    @if (Model.NotFilledCaseConferencesCount > 0)
+                    {
+                        <text>You have @Model.NotFilledCaseConferencesCount not completed @Html.ActionLink(linkText: "case conferences", actionName: "All", controllerName: "CaseConferences").</text>
+                    }
+                    else
+                    {
+                        <text>You don't have any not filled case conferences.</text>
+                    }
+                </div>
+            }
+                <div class="col-md-12 form-group">
+                    @if (Model.DocumentsCount > 0)
+                    {
+                        <text>You have @Model.DocumentsCount new @Html.ActionLink(linkText: "documents", actionName: "All", controllerName: "Document").</text>
+                    }
+                    else
+                    {
+                        <text>You don't have any new documents.</text>
+                    }
+                </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,116 @@
+﻿@using System.Globalization
+@using CHHC.DomainModel
+@using CHHC.Web.Models;
+@model EditCaseConference
+@{
+    ViewBag.Title = "Employee '" + Model.UserName + "' > Case Conference > View";
+}
+
+<div class="container page page-title-background mychhc">    
+    <h2 class="page-title">@Html.Raw(CHHC.Web.ViewHelper.PrepareTitle(ViewBag.Title))</h2>
+    <div class="container page-content">
+        <div class="row">
+            <div class="col-md-11">
+                @Html.Partial("_MessagePartial")
+
+                <br />
+                <div class="form-group">
+                    @Html.Label("PatientNameLabel", "Patient:", new { @class = "control-label" })&nbsp;@Model.PatientName
+                </div>
+                <div class="form-group">
+                    @Html.Label("PatientInnerChhcIdLabel", "Pt #:", new { @class = "control-label" })&nbsp;@Model.PatientInnerChhcId
+                </div>
+                <div class="form-group">
+                    @Html.Label("DateLabel", "Conference Date:", new { @class = "control-label" })&nbsp;@Model.Date.ToShortDateString()
+                </div>
+                <div class="form-group">
+                    @Html.Label("ClinicianLabel", "Clinician:", new { @class = "control-label" })&nbsp;@Model.UserName
+                </div>
+                <br />
+                @foreach (var question in Model.Questions)
+                {
+                    if (question.Type == TemplateCaseConferenceQuestionType.Text)
+                    {
+                        var textQuestion = question.TextQuestion;
+                        <div class="form-group question-box">
+                            @Html.Label(question.Id.ToString(CultureInfo.CurrentCulture), textQuestion.Text, new { @class = "control-label" })
+                            <br />
+                            @textQuestion.Answer
+                        </div>
+                    }
+                    else if (question.Type == TemplateCaseConferenceQuestionType.Date)
+                    {
+                        var dateQuestion = question.DateQuestion;
+                        <div class="form-group question-box">
+                            @Html.Label(question.Id.ToString(CultureInfo.CurrentCulture), dateQuestion.Text, new { @class = "control-label" })
+                            <br />
+                            @(dateQuestion.Answer.HasValue ? dateQuestion.Answer.Value.ToShortDateString() : string.Empty)
+                        </div>
+                    }
+                    else if (question.Type == TemplateCaseConferenceQuestionType.Multichoice)
+                    {
+                        var multichoiceQuestion = question.MultichoiceQuestion;
+                        <div class="form-group question-box">
+                            @Html.Label(question.Id.ToString(CultureInfo.CurrentCulture), multichoiceQuestion.Text, new { @class = "control-label" })
+                            @foreach (var answer in multichoiceQuestion.Answers)
+                            {
+                                string checkboxName = "Question" + @question.Id + "Answer" + @answer.Id + "IsCorrect";
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" disabled="disabled" name="@checkboxName" @(answer.IsChosen ? " checked='checked'" : string.Empty)>@Html.Label(answer.Id.ToString(CultureInfo.CurrentCulture), answer.Text, new { @class = "control-label" })
+                                    </label>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else if (question.Type == TemplateCaseConferenceQuestionType.MultichoiceText)
+                    {
+                        var multichoiceTextQuestion = question.MultichoiceTextQuestion;
+                        <div class="form-group question-box">
+                            @Html.Label(question.Id.ToString(CultureInfo.CurrentCulture), multichoiceTextQuestion.Text, new { @class = "control-label" })
+                            @foreach (var answer in multichoiceTextQuestion.Answers)
+                            {
+                                string checkboxName = "Question" + @question.Id + "Answer" + @answer.Id + "IsCorrect";
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" disabled="disabled" name="@checkboxName" @(answer.IsChosen ? " checked='checked'" : string.Empty)>@Html.Label(answer.Id.ToString(CultureInfo.CurrentCulture), answer.Text, new { @class = "control-label" })
+                                    </label>
+                                </div>
+                            }
+                            @multichoiceTextQuestion.TextAnswer
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                @{
+                    string returnAction = ViewBag.ReturnAction;
+                    using (Html.BeginForm(returnAction, "CaseConferences"))
+                     {
+                         @Html.AntiForgeryToken()
+                         @Html.Hidden("UserId", Model.UserId)
+                         @Html.Hidden("UserName", Model.UserName)
+                         @Html.Hidden("PatientId", Model.PatientId)
+                         @Html.Hidden("PatientName", Model.PatientName)
+                         <button type="submit" class="btn btn-default" name="Command" value="Submit">Back</button>
+                     }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryui")
+    <script>
+        $(function () {
+            $('.datepicker').datepicker({
+                showOn: "button",
+                buttonImage: "/img/content/calendar-icon-small.png",
+                buttonImageOnly: true
+            });
+        });
+    </script>
+}

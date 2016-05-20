@@ -1,0 +1,37 @@
+﻿@using CHHC.Web.Models.JobModels
+@model ViewJobApplicationEducation
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            @Html.Label(Model.Type, Model.Type, new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @readonly = "" })
+        </div>
+    </div>
+</div>
+<div class="row" style="padding-bottom:40px">
+    <div class="col-md-3">
+        <div class="form-group datepicket-holder">
+            @Html.LabelFor(x => x.From, new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.From, "{0:MMM yyyy}", new { @class = "form-control", @readonly = "" })
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group datepicket-holder">
+            @Html.LabelFor(x => x.To, new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.To, "{0:MMM yyyy}", new { @class = "form-control", @readonly = "" })
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            @Html.LabelFor(x => x.MainCourse, new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.MainCourse, new { @class = "form-control", @readonly = "" })
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            @Html.LabelFor(x => x.Degree, new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.Degree, new { @class = "form-control", @readonly = "" })
+        </div>
+    </div>
+</div>

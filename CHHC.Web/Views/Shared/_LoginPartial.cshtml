@@ -1,0 +1,29 @@
+﻿@using CHHC.Web
+<div class="pull-right sign-in-out container">
+    @if (Request.IsAuthenticated)
+    {
+        string defaultControllerName;
+        AccountHelper.GetDefaultController(User.Identity.Name, out defaultControllerName);
+        
+        <text>
+            <div class="login-menu-padding pull-left">Welcome, @User.Identity.Name</div>
+            @{
+                if (ViewContext.Controller is CHHC.Web.Controllers.HomeController)
+                {
+                    string landingControllerName;
+                    string landingActionName;
+                    AccountHelper.GetLandingControllerAction(User.Identity.Name, out landingControllerName, out landingActionName);
+                    <div class="login-menu-padding pull-left">@Html.ActionLink("My CHHC", landingActionName, landingControllerName, null, null)</div>
+                }
+            }
+            <div class="login-menu-padding pull-left">@Html.ActionLink("change password", "ChangePassword", "Account", null, null)</div>
+            <div class="login-menu-padding pull-left">@Html.ActionLink("help", "Help", defaultControllerName, null, null)</div>
+            @using (Html.BeginForm("SignOut", "Account", FormMethod.Post, new { id = "logoutForm", @class = "pull-right" })) {
+                @Html.AntiForgeryToken()
+                <a href="javascript:document.getElementById('logoutForm').submit()">sign out</a>
+            }
+        </text>
+    } else {
+        @Html.ActionLink("sign in", "SignIn", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+    }
+</div>

@@ -1,0 +1,236 @@
+.carousel {
+    margin-bottom: -30%;
+    overflow: visible;
+}
+.carousel-inner .item .container {
+    height: 100%;
+    overflow: auto;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+.carousel-caption h1, .carousel-caption h2, .carousel-caption h3, .carousel-caption h4 {
+    color: #fff;
+}
+.carousel-caption.dark h1 {
+    color: #005a81;
+}
+.carousel-indicators {
+    top: 54%;
+}
+.carousel-indicators li {
+    border: solid 1px black;
+}
+.carousel-caption {
+    top: 0px;
+    left: 7%;
+    width: 50%;
+    overflow: visible;
+    z-index: 1000;
+    padding: 0px;
+    height: 52%;
+    display: table;
+}
+.carousel-caption h1, .carousel-caption h2 {
+    font-weight: bold;
+    text-shadow: 0 0 4px #000000; /* horizontal-offset vertical-offset 'blur' colour */
+    -moz-text-shadow: 0 0 4px #000000;
+    -webkit-text-shadow: 0 0 4px #000000;
+    margin: 0px;
+    height: 100%;
+    display: table-cell;
+    vertical-align: bottom;
+    text-align: left;
+}
+.carousel-panel {
+    width: 35%;
+    top: 7%;
+    right: 7%;
+    z-index: 1;
+    position: absolute;
+}
+.carousel-panel h4 {
+    color: #ffffff;
+    margin-left: 0.5em;
+}
+.carousel-panel .table {
+    display: table;
+}
+.carousel-panel .table div {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+.carousel-panel .list-group-item:hover {
+    background-color: #ffffff;
+    opacity: 1 !important;
+    filter: alpha(opacity=100) !important;
+}
+.carousel-panel .list-group-item {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    opacity: 0.85;
+    filter: alpha(opacity=80);
+}
+.carousel-panel .list-group-item:first-child {
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+}
+.carousel-indicators li {
+    border-radius: 0px;
+}
+.carousel-panel .glyphicon {
+    color: #b4252d;
+    font-size: 1.5em;
+    opacity: 1 !important;
+    filter: alpha(opacity=100) !important;
+    /* text-shadow: 0px 0px 1px #000000 !important;*/
+    top: 0.2em;
+    left: -0.2em;
+}
+.carousel-panel .glyphicon-chevron-right {
+    color: #000000;
+    font-size: 0.9em;
+}
+.carousel-control span.glyphicon {
+    font-size: 1.5em;
+    top: 27%;
+    text-shadow: 0px 0px 3px rgba( 0, 0, 0, 1 );
+}
+.carousel-control .glyphicon-chevron-left {
+    left: 12% !important;
+}
+.carousel-control .glyphicon-chevron-right {
+    right: 12% !important;
+    left: auto !important;
+}
+
+/****************** Responsive ***********************/
+@media (max-width: 990px) {
+    .carousel-panel {
+        top: 3%;
+    }
+    .carousel-panel h4 {
+        margin-left: 0.5em;
+        font-size: 16px;
+    }
+    .carousel-panel .list-group-item {
+        margin: 0.2em;
+        padding: 0.2em 0.1em 0.2em 0.1em;
+    }
+    .carousel-caption h1 {
+        font-size: 22px;
+    }
+    .carousel-caption h2 {
+        font-size: 18px;
+    }
+    .carousel-caption h3 {
+        font-size: 16px;
+    }
+    .carousel-caption h4 {
+        font-size: 14px;
+    }
+}
+
+
+
+@media (max-width:768px) {
+    .navbar-collapse-menu {
+        margin-top: 2px !important;
+    }
+    .navbar-brand-name h2 {
+        line-height: 1;
+        font-weight: bold;
+        font-size: 22px;
+        width: 150px;
+    }
+    .navbar-brand-name {
+        margin-left: 10px !important;
+    }
+    .carousel-panel h4 {
+        margin-left: 0.2em;
+        font-size: 14px;
+    }
+    .carousel-panel .list-group-item {
+        margin: 0.1em;
+        padding: 2px;
+    }
+    .carousel-caption h1 {
+        font-size: 20px;
+    }
+    .carousel-caption h2 {
+        font-size: 16px;
+    }
+    .carousel-caption h3 {
+        font-size: 14px;
+    }
+    .carousel-caption h4 {
+        font-size: 12px;
+    }
+    .carousel-control span.glyphicon {
+        font-size: 1em;
+        margin-bottom: 5%;
+    }
+    .carousel-indicators {     
+        font-size: 5px;
+    }
+    .page-content {
+        margin-top: 40px;
+    }
+}
+
+
+@media (max-width:480px) {
+    .carousel-panel {
+        display: block;
+        clear: both;
+        position: static;
+        width: 100%;
+        margin: 0px;
+        height: 144px;
+    }
+    .carousel-panel .table div {
+        text-align: left;
+    }
+    .carousel-caption h1 {
+        font-size: 22px;
+    }
+    .carousel-caption h2 {
+        font-size: 18px;
+    }
+    .carousel-caption h3 {
+        font-size: 16px;
+    }
+    .carousel-caption h4 {
+        font-size: 14px;
+    }
+    .carousel-caption {
+        width: 90%;
+        top: 0px;
+    }
+    .carousel-panel .list-group-item {
+        margin: 0px;
+        padding: 4px;
+    }
+    .carousel-control {
+        margin-top: 144px;
+    }
+    .carousel-control span.glyphicon {
+        font-size: 0.8em;
+    }
+    .carousel-indicators {
+        top: 36%;
+        margin-top: 144px;
+    }
+    .carousel-indicators li {
+        height: 7px;
+        width: 7px;
+    }
+    .carousel-indicators li.active {
+        height: 9px;
+        width: 9px;
+    }
+}

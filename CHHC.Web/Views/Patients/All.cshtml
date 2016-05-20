@@ -1,0 +1,66 @@
+﻿@using CHHC.Web.Models;
+@model List<ViewPatient>
+@{
+    ViewBag.Title = "Patients";
+}
+
+<div class="container page page-title-background mychhc">    
+    <h2 class="page-title">@Html.Raw(CHHC.Web.ViewHelper.PrepareTitle(ViewBag.Title))</h2>
+    <div class="container page-content">
+        <div class="row">
+            <div class="col-md-12">
+                @Html.Partial("_MessagePartial")
+                @Html.ActionLink("Create patient", "Create", null, new { @class="btn btn-primary btn-top" })
+                <table id="patients" class="table table-striped table-bordered table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Pt #</th>
+                            <th>Name</th>
+                            <th>Patients</th>
+                            <th>Case conferences</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (ViewPatient viewPatient in Model)
+                        {
+                            <tr>
+                                <td>@viewPatient.InnerChhcId</td>
+                                <td>@viewPatient.Name</td>
+                                <td>@Html.ActionLink(linkText: "employees", actionName: "Employees", routeValues: new { Id = viewPatient.Id, PatientName = viewPatient.Name })</td>
+                                <td>@Html.ActionLink(linkText: "case conferences", actionName: "AllForPatient", controllerName: "CaseConferences", routeValues: new { Id = viewPatient.Id, PatientName = viewPatient.Name }, htmlAttributes: null)</td>
+                                <td>@Html.ActionLink(linkText: "edit", actionName: "Edit", routeValues: new { Id = viewPatient.Id, PatientName = viewPatient.Name })</td>
+                                <td>
+                                    @using (Html.BeginForm("Delete", null, FormMethod.Post, new { id = "deleteForm" + viewPatient.Id }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.Hidden("Id", viewPatient.Id)
+                                        <a href="javascript:{}" onclick="if(confirm('Are you sure?')) { $(this).closest('form').submit();return false; } else { e.preventDefault();return false; }">delete</a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#patients').dataTable({
+                "columnDefs": [
+                    { "sorting": false, "targets": 2 },
+                    { "sorting": false, "targets": 3 },
+                    { "sorting": false, "targets": 4 },
+                    { "sorting": false, "targets": 5 }
+                ]
+            });
+        } );
+    </script>
+}

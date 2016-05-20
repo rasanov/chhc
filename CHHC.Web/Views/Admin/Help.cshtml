@@ -1,0 +1,147 @@
+﻿@using CHHC.Web.Models;
+@{
+    ViewBag.Title = "Help";
+}
+
+<div class="container page page-title-background mychhc">    
+    <h2 class="page-title">@Html.Raw(CHHC.Web.ViewHelper.PrepareTitle(ViewBag.Title))</h2>
+    <div class="container page-content help">
+        <div class="row">
+            <div class="col-md-12">
+                <br />
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Main terms</a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                @if (User.IsInRole(RoleNames.CHHCAdmin))
+                                {
+                                    <h4>ROLES</h4>
+                                    <p>There are three roles: administrator, the one who manages trainings and the one who takes trainings.</p>
+                                    <p>Administrator can create a user, edit, reset its password and assign roles and trainings. Administrator also can see which user have taken which training and vice versa – which training was taken by which user. If a user passed a training, Administrator can print completion form.</p>
+                                    <p>User in role 'Can manage trainings' cannot manage users and roles but only works with trainings. He/she can create, edit and delete a training; can create and modify the quiz.</p>
+                                    <p>User in role 'Takes trainings' has access to trainings, can watch/read training material and can take a quiz.</p>
+
+                                    <h4>USERS</h4>
+                                    <p>Users are all administrators, trainings managers and employees. Users can sign in and perform actions correspondingly to their roles.</p>
+                                }
+                                <h4>TRAINIGS</h4>
+                                <p>A training is a combination of all or any of text, video, audio and supplementary materials (google drive documents). Trainings might be assign to one or many users. A training also has a quiz with multi-choice questions.</p>
+
+                                <h4>PROFILE</h4>
+                                <p>Main core personal functionality for signed in user</p>
+                            </div>
+                        </div>
+                    </div>
+                    @if (User.IsInRole(RoleNames.CHHCAdmin))
+                    {
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Work with users</a>
+                                </h4>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <p>Go to Users tab.</p>
+                                    <p>Find and click ‘Create user’ button.</p>
+                                    <img src="~/img/help/create-user.jpg" />
+                                    <p>On the new screen fill all required fields and click ‘Save’ button.</p>
+                                    <p>If you need to edit user information, find the user and click ‘edit’ next to him/her:</p>
+                                    <img src="~/img/help/edit-user.jpg" />
+                                    <p>You can also reset user’s password, to do that click ‘reset password’ next to that user.</p>
+                                    <p>User has to be in one of the roles. To connect user with roles click ‘roles’ next to the user. On the Roles page check those roles and these roles would be assigned to the user.</p>
+                                    <img src="~/img/help/user-roles.jpg" />
+                                    <p>Click Save at the bottom.</p>
+                                    <p>User can take only those trainings assigned to him/her. Click ‘trainings’ next to the user to make the assignment or/and to see which trainings are already assigned and which of them are passed. If the training is passed there will be information when the quiz was passed.</p>
+                                    <img src="~/img/help/user-trainings.jpg" />
+                                    <p>Check the checkbox if you want to assign the training to this user.</p>
+                                    <p>It is not recommended to un-assign (uncheck the checkbox) if the training is already passed, because all the information about passing the training would be lost.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTree">Work with roles</a>
+                                </h4>
+                            </div>
+                            <div id="collapseTree" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <p>Go to Roles tab.</p>
+                                    <p>There three predefined roles. To give user some of these roles, click ‘users’ next to the role.</p>
+                                    <img src="~/img/help/roles.jpg" />
+                                    <p>On the new page, check those users that should have this role and uncheck the users shat should not be in this role:</p>
+                                    <img src="~/img/help/role-users.jpg" />
+                                    <p>Click ‘Save’ at the bottom.</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">Work with trainings</a>
+                            </h4>
+                        </div>
+                        <div id="collapseFour" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <p>Go to Trainings tab.</p>
+                                <p>Click ‘Create training’ button to create a training. Fill all required fields on new screen.</p>
+                                <img src="~/img/help/create-training.jpg" />
+                                <p> - Text is formatted text that will be represented exactly how you format it here</p>
+                                <p> - When setting video both title and youtube url should be defined. Training can be without video. To get correct youtube url, click ‘share’ below the video, optionally set privacy restrictions and copy url address.</p>
+                                <p> - When setting audio both title should be set and file itself should be uploaded. Only .mp3 files are allowed here. Files should not exceed the limit of 20 Mb. Training can be without audio.</p>
+                                <p> - Documents are google drive supplementary material document. Training can be without documents.</p>
+                                <p>Training can be modified by clicking the link ‘edit’ next to the training.</p>
+                                <p></p>
+                                <p></p>
+                                <img src="~/img/help/edit-training.jpg" />
+                                <p>If you want to set which user should take the training, click ‘users’ next to the training. On the new page, check/uncheck the checkboxes depending on whether a user should take the training or not.</p>
+                                <img src="~/img/help/training-users.jpg" />
+                                <p>Here you can also see if user have completed the training and if so, the date information is shown and completion form can be opened.</p>
+                                <p>Each training has to have a quiz. To create/edit the quiz, click ‘quiz’ next to the training. On the new page you can add questions (#2), edit questions (#6) and delete questions (#3); add answers (#1), edit answers (#7) and delete answers (#4) for the questions; set which answer is correct for every question be checking the checkbox (#5).</p>
+                                <img src="~/img/help/training-quiz.jpg" />
+                                <p>Click ‘Save’ when the quiz is composed.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive">Take the training</a>
+                            </h4>
+                        </div>
+                        <div id="collapseFive" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <p>Go to Trainings tab.</p>
+                                <p>Select the training and click on its title. The training with its text, video, audio and supplementary material will be opened. When you are ready – click ‘take a quiz’. If the quiz is already passed, here you can open the completion form.</p>
+                                <img src="~/img/help/take-training.jpg" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix">Change own password</a>
+                            </h4>
+                        </div>
+                        <div id="collapseSix" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <p>Go to Profile tab.</p>
+                                <p>Change password page will be opened. User has to put in its old password and then set new one.</p>
+                                <img src="~/img/help/change-password.jpg" />
+                                <p>Click ‘Save’ at the bottom of the page.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+            </div>
+        </div>
+    </div>
+</div>

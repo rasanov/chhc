@@ -1,0 +1,80 @@
+﻿@using CHHC.Web.Models
+@model TrainingUsers
+@{
+    ViewBag.Title = "Training '" + @Model.TrainingTitle + "' > Users";
+}
+
+<div class="container page page-title-background mychhc">    
+    <h2 class="page-title">@Html.Raw(CHHC.Web.ViewHelper.PrepareTitle(ViewBag.Title))</h2>
+    <div class="container page-content">
+        <div class="row">
+            <div class="col-md-12">
+                @Html.Partial("_MessagePartial")
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary()
+                    @Html.HiddenFor(m => m.TrainingId)
+                    @Html.HiddenFor(m => m.TrainingTitle)
+                    <br />
+                    <table class="table table-striped table-bordered table-condensed">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>User</th>
+                            <th>Completed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (TrainingUser user in Model.AllUsers)
+                        {
+                            var connected = Model.UserIds.Contains(user.UserProfile.UserId);
+                            <tr>
+                                <td class="text-center">
+                                    <input id="userIds" name="userIds" type="checkbox" value="@user.UserProfile.UserId" @(connected ? " checked=checked" : string.Empty) onclick="@(user.HasCompleted ? "return false;" : string.Empty)" />
+                                </td>
+                                <td>
+                                    @user.UserProfile.UserName (@user.UserProfile.FullName)
+                                </td>
+                                <td>
+                                    @if (connected)
+                                    {
+                                        if (user.HasCompleted)
+                                        {
+                                            if (user.CompletedDate.HasValue)
+                                            {
+                                                <text>completed at @user.CompletedDate.Value.ToString("d")</text>
+                                            }
+                                            else
+                                            {
+                                                <text>completed</text>
+                                            }
+                                            @Html.ActionLink("Open Completion Form", "OpenCompletionForm", new { TrainingId = Model.TrainingId, UserId = user.UserProfile.UserId }, new { @class = "btn btn-primary btn-xs" })
+                                        }
+                                        else
+                                        {
+                                            <text>not completed</text>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <text>N/A</text>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    </table>
+                    <br />
+
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    @Html.ActionLink("Back", "Trainings", null, new { @class="btn btn-default" })
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

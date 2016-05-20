@@ -1,0 +1,123 @@
+﻿@using CHHC.Web
+@{
+    Layout = "~/Views/Shared/BaseLayout.cshtml";
+}
+
+@section Head
+{
+    @RenderSection("Head", false)
+}
+
+@section HeaderMenu
+{
+    @{
+        string defaultControllerName;
+        AccountHelper.GetDefaultController(User.Identity.Name, out defaultControllerName);
+
+        string landingControllerName;
+        string landingActionName;
+        AccountHelper.GetLandingControllerAction(User.Identity.Name, out landingControllerName, out landingActionName);
+
+                    <div class="pull-right sign-in-out container">
+                        @if (Request.IsAuthenticated)
+                        {
+                            <text>
+                                <div class="login-menu-padding pull-left">Welcome, @User.Identity.Name</div>
+                                @{
+                            if (ViewContext.Controller is CHHC.Web.Controllers.HomeController)
+                            {
+                                        <div class="login-menu-padding pull-left">@Html.ActionLink("My CHHC", landingActionName, landingControllerName, null, null)</div>
+                            }
+                                }
+                                <div class="login-menu-padding pull-left">@Html.ActionLink("change password", "ChangePassword", "Account", null, null)</div>
+                                <div class="login-menu-padding pull-left">@Html.ActionLink("help", "Help", defaultControllerName, null, null)</div>
+                                @using (Html.BeginForm("SignOut", "Account", FormMethod.Post, new { id = "logoutForm", @class = "pull-right" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <a href="javascript:document.getElementById('logoutForm').submit()">sign out</a>
+                                }
+                            </text>
+                        }
+                        else
+                        {
+                            <div class="login-menu-padding pull-left">@Html.ActionLink("help", "Help", defaultControllerName, null, null)</div>
+                            <div class="login-menu-padding pull-left">@Html.ActionLink("sign in", "SignIn", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</div>
+                        }
+                    </div>
+    }
+
+                    <div class="navbar-collapse collapse @if (@ViewContext.RouteData.GetRequiredString("action") == "Index")
+                                                         { <text>in</text> } navbar-collapse-menu">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li @if (@ViewContext.RouteData.GetRequiredString("action") == "Index") {  @Html.AttributeEncode("class=active"); }>
+                               <a href="@Url.Action("Index", "Home")"> <span class="glyphicon glyphicon-home"></span> Home </a>
+                            </li>
+                            <li @if (@ViewContext.RouteData.GetRequiredString("action") == "About") { @Html.AttributeEncode("class=active"); }>
+                                <a href="@Url.Action("About", "Home")"> <span class="glyphicon glyphicon-info-sign"></span> About </a>
+                            </li>
+                            <li @if (@ViewContext.RouteData.GetRequiredString("action") == "Services") { @Html.AttributeEncode("class=active"); }>
+                                <a href="@Url.Action("Services", "Home")"> <span class="glyphicon glyphicon-briefcase"></span> Our Services </a>
+                            </li>
+                            <li @if (@ViewContext.RouteData.GetRequiredString("action") == "Contact") { @Html.AttributeEncode("class=active"); }>
+                                <a href="@Url.Action("Contact", "Home")"> <span class="glyphicon glyphicon-envelope"></span> Contact Us </a>
+                            </li>
+                            <li @if (@ViewContext.RouteData.GetRequiredString("action") == "Job") { @Html.AttributeEncode("class=active"); }>
+                                <a href="@Url.Action("Job", "Home")"> <i class="icon-paper-plane"></i> Job </a>
+                            </li>
+                            <li @if (@ViewContext.RouteData.GetRequiredString("action") == "Blog") { @Html.AttributeEncode("class=active") ; }>
+                                <a href="@Url.Action("Blogs", "Home")"> <i class="icon-comment"></i> Blog </a>
+                            </li>
+
+                            @if (Request.IsAuthenticated)
+                            {
+                                if (ViewContext.Controller is CHHC.Web.Controllers.HomeController)
+                                {
+                                    string controllerName;
+                                    string actionName;
+                                    CHHC.Web.AccountHelper.GetLandingControllerAction(User.Identity.Name, out controllerName, out actionName);
+                                    <li class="security-menu-item">
+                                        @Html.ActionLink("My CHHC", actionName, controllerName, null, null)
+                                    </li>
+                                }
+                                <li class="security-menu-item">
+                                    @Html.ActionLink("Sign out", "SignOut", "Account", null, null)
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="security-menu-item">
+                                    @Html.ActionLink("Sign in", "SignIn", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+                                </li>
+                            }
+                        </ul>
+                    </div>
+}
+
+@RenderBody()
+
+@section FooterMenu
+{
+                    <ul>
+                        <li><a href="#">Back to top</a></li>
+                        <li>@Html.ActionLink("Home", "Index")</li>
+                        <li>@Html.ActionLink("About", "About")</li>
+                        <li>@Html.ActionLink("Our Services", "Services")</li>
+                        <li>@Html.ActionLink("Contact us", "Contact")</li>
+                        <li>@Html.ActionLink("Job", "Job")</li>
+                        <li>@Html.ActionLink("Blogs", "Blogs")</li>
+                    </ul>
+}
+
+@section Scripts
+{
+    @RenderSection("Scripts", false)
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-46691277-1', 'centralhomehealthcare.com');
+        ga('send', 'pageview');
+    </script>
+}

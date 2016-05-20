@@ -1,0 +1,63 @@
+﻿@using CHHC.Web.Models;
+@{
+    ViewBag.Title = "Help";
+}
+
+<div class="container page page-title-background mychhc">    
+    <h2 class="page-title">@Html.Raw(CHHC.Web.ViewHelper.PrepareTitle(ViewBag.Title))</h2>
+    <div class="container page-content help">
+        <div class="row">
+            <div class="col-md-12">
+                <br />
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Main terms</a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <h4>TRAINIGS</h4>
+                                <p>A training is a combination of all or any of text, video, audio and supplementary materials (google drive documents). Trainings might be assign to one or many users. A training also has a quiz with multi-choice questions.</p>
+
+                                <h4>PROFILE</h4>
+                                <p>Main core personal functionality for signed in user</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive">Take the training</a>
+                            </h4>
+                        </div>
+                        <div id="collapseFive" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <p>Go to Trainings tab.</p>
+                                <p>Select the training and click on its title. The training with its text, video, audio and supplementary material will be opened. When you are ready – click ‘take a quiz’. If the quiz is already passed, here you can open the completion form.</p>
+                                <img src="~/img/help/take-training.jpg" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix">Change own password</a>
+                            </h4>
+                        </div>
+                        <div id="collapseSix" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <p>Go to Profile tab.</p>
+                                <p>Change password page will be opened. User has to put in its old password and then set new one.</p>
+                                <img src="~/img/help/change-password.jpg" />
+                                <p>Click ‘Save’ at the bottom of the page.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+            </div>
+        </div>
+    </div>
+</div>

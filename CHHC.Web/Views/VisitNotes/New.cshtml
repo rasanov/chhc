@@ -1,0 +1,485 @@
+﻿@using CHHC.DomainModel
+@using CHHC.Web.Models;
+@model CreateVisitNote
+@{
+    ViewBag.Title = "Skilled Nursing Visit Note";
+}
+
+<div class="container page page-title-background mychhc">    
+    <h2 class="page-title">@Html.Raw(CHHC.Web.ViewHelper.PrepareTitle(ViewBag.Title))</h2>
+    <div class="container page-content">
+        <div class="row">
+            <div class="col-md-12 form-fit form-compact">
+                @Html.Partial("_MessagePartial")
+                
+                @using (Html.BeginForm())
+                {
+                    <div class="row form-group">
+                        <div class="col-md-9">
+                            @Html.Label("Patient")
+                            @Html.DropDownList("patientId", new SelectList(Model.ViewPatients, "Id", "Name", Model.PatientId), new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(m => m.RecordNumber, new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.RecordNumber, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-12">
+                            @Html.CheckBoxFor(m => m.IsVisitReassessment)
+                            @Html.LabelFor(m => m.IsVisitReassessment)
+                        &nbsp;&nbsp;&nbsp;
+                            @Html.CheckBoxFor(m => m.IsVisitPRN)
+                            @Html.LabelFor(m => m.IsVisitPRN)
+                        &nbsp;&nbsp;&nbsp;
+                            @Html.CheckBoxFor(m => m.IsVisitNonBillable)
+                            @Html.LabelFor(m => m.IsVisitNonBillable)
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-12">
+                            @Html.LabelFor(m => m.AdministrativeChanges)
+                            @Html.TextBoxFor(m => m.AdministrativeChanges, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-12">
+                            @Html.CheckBoxFor(m => m.IsVisitD)
+                            @Html.LabelFor(m => m.IsVisitD)
+                        &nbsp;&nbsp;&nbsp;
+                            @Html.CheckBoxFor(m => m.IsVisitOA)
+                            @Html.LabelFor(m => m.IsVisitOA)
+                        &nbsp;&nbsp;&nbsp;
+                            @Html.CheckBoxFor(m => m.IsVisitTE)
+                            @Html.LabelFor(m => m.IsVisitTE)
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-9">
+                            @Html.CheckBoxFor(m => m.IsHomebound)
+                            @Html.LabelFor(m => m.IsHomebound)
+                            @Html.TextBoxFor(m => m.HomeboundEfforts, new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(m => m.AssistiveDevice)
+                            @Html.TextBoxFor(m => m.AssistiveDevice, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-12">
+                            @Html.CheckBoxFor(m => m.IsNotHomebound)
+                            @Html.LabelFor(m => m.IsNotHomebound)
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-12">
+                            <h3>SKILLED NURSING ASSESSMENT</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <h4>Vital Signs</h4>
+                            
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.LabelFor(m => m.Temperature)
+                                    @Html.TextBoxFor(m => m.Temperature, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.LabelFor(m => m.Weight)
+                                    @Html.TextBoxFor(m => m.Weight, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.LabelFor(m => m.BPStanding)
+                                    @Html.TextBoxFor(m => m.BPStanding, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.LabelFor(m => m.BPSitting)
+                                    @Html.TextBoxFor(m => m.BPSitting, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.LabelFor(m => m.BPLying)
+                                    @Html.TextBoxFor(m => m.BPLying, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.LabelFor(m => m.FSBSFasting)
+                                    @Html.TextBoxFor(m => m.FSBSFasting, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.LabelFor(m => m.FSBSNonFasting)
+                                    @Html.TextBoxFor(m => m.FSBSNonFasting, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <h4>Raspiratory</h4>
+                            
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.RespiratoryWNL)
+                                    @Html.LabelFor(m => m.RespiratoryWNL)
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.LabelFor(m => m.RespiratoryRate)
+                                    @Html.TextBoxFor(m => m.RespiratoryRate, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.LabelFor(m => m.SOB)
+                                    @Html.TextBoxFor(m => m.SOB, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.LabelFor(m => m.O2Sat)
+                                    @Html.TextBoxFor(m => m.O2Sat, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.CoughExists)
+                                    @Html.LabelFor(m => m.CoughExists)
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.CoughDry)
+                                    @Html.LabelFor(m => m.CoughDry)
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.CoughProductive)
+                                    @Html.LabelFor(m => m.CoughProductive)
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.LabelFor(m => m.SputumColor)
+                                    @Html.TextBoxFor(m => m.SputumColor, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <h4>Cardiovascular</h4>
+                            
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.CardiovascularWNL)
+                                    @Html.LabelFor(m => m.CardiovascularWNL)
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.LabelFor(m => m.HR)
+                                    @Html.TextBoxFor(m => m.HR, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.HRReg)
+                                    @Html.LabelFor(m => m.HRReg)
+                                    &nbsp;&nbsp;
+                                    @Html.CheckBoxFor(m => m.HRIrreg)
+                                    @Html.LabelFor(m => m.HRIrreg)
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.ChestPain)
+                                    @Html.LabelFor(m => m.ChestPain)
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.Dizziness)
+                                    @Html.LabelFor(m => m.Dizziness)
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.Edema)
+                                    @Html.LabelFor(m => m.Edema)
+                                </div>
+                            </div>
+                            <p>LEs Measurements:</p>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.LabelFor(m => m.RightAnkle)
+                                    @Html.TextBoxFor(m => m.RightAnkle, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.LabelFor(m => m.LeftAnkle)
+                                    @Html.TextBoxFor(m => m.LeftAnkle, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.LabelFor(m => m.RightCalf)
+                                    @Html.TextBoxFor(m => m.RightCalf, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.LabelFor(m => m.LeftCalf)
+                                    @Html.TextBoxFor(m => m.LeftCalf, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.LabelFor(m => m.PeriferalPulse)
+                                    @Html.TextBoxFor(m => m.PeriferalPulse, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <h4>Neurosensory</h4>
+                            
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.NeurosensoryWNL)
+                                    @Html.LabelFor(m => m.NeurosensoryWNL)
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.IsOriented)
+                                    @Html.LabelFor(m => m.IsOriented)
+                                    @Html.TextBoxFor(m => m.Oriented, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.Forgetful)
+                                    @Html.LabelFor(m => m.Forgetful)
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.Depressed)
+                                    @Html.LabelFor(m => m.Depressed)
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.Anxious)
+                                    @Html.LabelFor(m => m.Anxious)
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.HearingImpairment)
+                                    @Html.LabelFor(m => m.HearingImpairment)
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.VisualImpairment)
+                                    @Html.LabelFor(m => m.VisualImpairment)
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.SpeechImpairment)
+                                    @Html.LabelFor(m => m.SpeechImpairment)
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.LegallyBlind)
+                                    @Html.LabelFor(m => m.LegallyBlind)
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.DecreaseSensitivity)
+                                    @Html.LabelFor(m => m.DecreaseSensitivity)
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.Seizure)
+                                    @Html.LabelFor(m => m.Seizure)
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.LabelFor(m => m.NeurosensoryOther)
+                                    @Html.TextBoxFor(m => m.NeurosensoryOther, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <h4>Gastrointestinal</h4>
+                            
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.GastrointestinalWNL)
+                                    @Html.LabelFor(m => m.GastrointestinalWNL)
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.LabelFor(m => m.LastBM)
+                                    @Html.TextBoxFor(m => m.LastBM, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.BowelSounds)
+                                    @Html.LabelFor(m => m.BowelSounds)
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.NauseaVomiting)
+                                    @Html.LabelFor(m => m.NauseaVomiting)
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.GastrointestinalIncontinence)
+                                    @Html.LabelFor(m => m.GastrointestinalIncontinence)
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.Diarrhea)
+                                    @Html.LabelFor(m => m.Diarrhea)
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.Constipation)
+                                    @Html.LabelFor(m => m.Constipation)
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.TubeFeeding)
+                                    @Html.LabelFor(m => m.TubeFeeding)
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.Colostomy)
+                                    @Html.LabelFor(m => m.Colostomy)
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.LabelFor(m => m.Diet)
+                                    @Html.TextBoxFor(m => m.Diet, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <h5>Genitourinary</h5>
+                            
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.GenitourinaryWNL)
+                                    @Html.LabelFor(m => m.GenitourinaryWNL)
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.Distention)
+                                    @Html.LabelFor(m => m.Distention)
+                                </div>
+                            </div>
+                            
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.Retention)
+                                    @Html.LabelFor(m => m.Retention)
+                                </div>
+                            </div>
+                            
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.Burning)
+                                    @Html.LabelFor(m => m.Burning)
+                                </div>
+                            </div>
+                            
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.Pain)
+                                    @Html.LabelFor(m => m.Pain)
+                                </div>
+                            </div>
+                            
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.GenitourinaryIncontinence)
+                                    @Html.LabelFor(m => m.GenitourinaryIncontinence)
+                                </div>
+                            </div>
+                            
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.Frequency)
+                                    @Html.LabelFor(m => m.Frequency)
+                                </div>
+                            </div>
+                            
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.Urgency)
+                                    @Html.LabelFor(m => m.Urgency)
+                                </div>
+                            </div>
+                            
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.Nocturia)
+                                    @Html.LabelFor(m => m.Nocturia)
+                                </div>
+                            </div>
+                            
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.FoleyCatheter)
+                                    @Html.LabelFor(m => m.FoleyCatheter)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                    </div>
+                    <div class="row">
+                    </div>
+                    <div class="row">
+                    </div>
+                    <div class="row">
+                    </div>
+                
+                    <br />
+                    @Html.ActionLink("Print as is", "Print", null, new { @class = "btn btn-default" })<text>&nbsp;</text>
+                    @Html.ActionLink("Validate", "Validate", null, new { @class = "btn btn-info" })<text>&nbsp;</text>
+                    @Html.ActionLink("Save", "Save", null, new { @class = "btn btn-primary" })<text>&nbsp;</text>
+                    @Html.ActionLink("Back", "Back", null, new { @class = "btn btn-default" })
+                }
+            </div>
+        </div>
+    </div>
+</div>
